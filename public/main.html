@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Turbo Terrier | The BU Class Registration Bot</title>
+    <meta name="google-signin-client_id" content="625855115094-emsoq1dbbupaunb25ms2uiu3ppofie1f.apps.googleusercontent.com">
+    <meta name="description" content="Automatically register for your Boston University courses at the first opening seat! Live stress free, carefree and leave it all to Turbo Terrier!">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://turboterrier.com/assets/img/Main Logo.jpeg">
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "WebSite",
+            "name": "Turbo Terrier | The BU Class Registration Bot",
+            "url": "https://turboterrier.com"
+        }
+    </script>
+    <link rel="icon" type="image/png" sizes="800x800" href="assets/img/Circle%20Logo.png?h=b4df40943cbf612a1bc25432350eb9e7">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Antic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
+    <link rel="stylesheet" href="assets/css/swiper-icons.css?h=c7acc97a8ef16e20b0cd8626a5c9c098">
+    <link rel="stylesheet" href="assets/css/accordion-faq-list.css?h=f47106324583193c7d3c36c0bd40c232">
+    <link rel="stylesheet" href="assets/css/Black-Navbar.css?h=5ba3564199f115ae77dd64b33b7a4328">
+    <link rel="stylesheet" href="assets/css/Feature-Block-Image-Three-With-Full-Wide-Screen.css?h=aaeaeebb1ae70daccf6a87a810082d97">
+    <link rel="stylesheet" href="assets/css/Navbar-Centered-Brand-Dark-icons.css?h=befd8a398792e305b7ffd4a176b5b585">
+    <link rel="stylesheet" href="assets/css/Pricing-Duo-badges.css?h=966f4a3faf034d0f7f9779567201fb70">
+    <link rel="stylesheet" href="assets/css/Simple-Slider-swiper-bundle.min.css?h=b2e8d5a1d0e80833f32608dcfff200b6">
+    <link rel="stylesheet" href="assets/css/Simple-Slider.css?h=da830b6503e0457b5735b0129f20b163">
+    <link rel="stylesheet" href="assets/css/Toggle-Switch-toggle-switch.css?h=4a2791a5f7e4c5f54cb30ecec8fa2f1a">
+    <link rel="stylesheet" href="assets/css/Toggle-Switch.css?h=960d853b5b62c1ab31319088dc55dd5e">
+</head>
+
+<body>
+    <div>
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Google OAuth Sign In</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" style="height: 100px;">
+                        <div class="d-flex d-xl-flex justify-content-center justify-content-xl-center"><button class="btn btn-primary disabled d-flex d-xl-flex justify-content-center align-items-center justify-content-xl-center align-items-xl-center" type="button" style="width: 100%;padding: 2px;margin: 3px;" disabled=""><img class="d-xl-flex" src="assets/img/colourful-google-logo-on-white-background-free-vector.jpg?h=b765ad122354a74d27a92f2fbd11ac72" style="width: 36px;height: 36px;">&nbsp; &nbsp; Sign in with Google</button></div>
+                        <p class="fs-6 fw-semibold text-center text-danger-emphasis">* Note you must sign in with you <span style="color: rgb(255, 15, 0); background-color: rgb(255, 255, 255);">@bu.edu</span> email *</p>
+                    </div>
+                    <div class="modal-footer d-flex d-md-flex justify-content-center justify-content-md-center">
+                        <form>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" checked=""><label class="form-check-label" for="formCheck-1">I agree to the abide by the <a href="/tos">Terms of Service</a>.</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2" checked=""><label class="form-check-label" for="formCheck-2">I have acknowledged the<a href="/privacy"> Privacy Policy</a>.</label></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid d-flex d-xl-flex justify-content-center heading-container" style="background: linear-gradient(31deg, rgb(1,17,30), rgb(13,36,62) 63%, rgb(46,70,92)), linear-gradient(31deg, rgb(1,17,30), rgb(13,36,62) 63%, rgb(46,70,92));padding-bottom: 10px;">
+        <div class="row d-lg-flex accordion-header">
+            <div class="col d-flex d-sm-flex justify-content-center align-items-center justify-content-sm-center"><img class="d-sm-flex" src="assets/img/No%20background.png?h=b92feec1ed1e7748f0d3e690781ff75b" style="width: 200px;height: 200px;margin: 25px;"></div>
+            <div class="col d-flex justify-content-center align-items-center justify-content-xl-center align-items-xl-center" style="padding-bottom: 24px;padding-right: 0px;padding-left: 0px;">
+                <div class="row d-inline-block">
+                    <div class="col d-flex justify-content-center">
+                        <h1 class="display-2 text-nowrap text-light d-sm-flex d-xl-flex">Turbo Terrier</h1>
+                    </div>
+                    <div class="col">
+                        <hr class="d-block" style="height: 8px;background: var(--bs-body-bg);">
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <h1 class="display-6 text-nowrap text-light">The BU Registration Bot</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-md bg-dark py-3" data-bs-theme="dark">
+        <div class="container"><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-6"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-6">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" id="home" style="padding-right: 16px;padding-left: 16px;"><a class="nav-link active" href="#">Home</a></li>
+                    <li class="nav-item" style="padding-right: 16px;padding-left: 16px;"><a class="nav-link" id="pricing" href="#">Pricing</a></li>
+                    <li class="nav-item" style="padding-left: 16px;"><a class="nav-link" id="faq" href="#">FAQ</a></li>
+                </ul>
+                <div class="d-md-none my-2"><button class="btn btn-primary" type="button">Login/Register</button></div>
+            </div>
+            <div class="d-none d-md-block"><a class="btn btn-light me-2" role="button" href="#" style="border-radius: 5px;">Dashboard (only visible after login)</a><a class="btn btn-primary" role="button" href="#" style="border-radius: 5px;">Login/Logout</a></div>
+        </div>
+    </nav>
+    <div class="container d-xxl-flex justify-content-xxl-center" style="padding-left: 18px;padding-right: 18px;padding-top: 24px;" data-bs-target="#home">
+        <div class="row gy-4 mb-5">
+            <div class="col-md-8 col-xl-6 col-xxl-11 text-start mx-auto">
+                <h2 style="text-align: left;">What is Turbo Terrier?</h2>
+                <p class="w-lg-50" style="text-align: left;">Turbo Terrier is an automatic course registration bot created for Boston University students. The applications runs locally on your device and so in order to use it, you must download the Turbo Terrier software and run it on your computer. Your first course is free!</p>
+                <p style="text-align: left;"><strong>Here is how it works:</strong><br>1. Begin by registering an account on this site by clicking the <button class="btn btn-primary" type="button" style="border-radius: 5px;">Login</button>&nbsp;button on our site navbar.<br>2. Login in to your <a href="bu.edu">@bu.edu</a> gmail account to continue and authorize Turbo Terrier. Non-BU accounts will be rejected from registration.<br>3. Follow instructions that will be provided to you on the user dashboard and setup the application on your computer and select the courses you want to register.<br>4. After you the launch the application, the bot will check every few seconds to see if your course has opened up. If it has, it will register instantly.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3" style="padding-bottom: 24px;">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body p-4" style="height: 300px;">
+                        <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center d-inline-block mb-3 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-shield-lock-fill">
+                                <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0m0 5a1.5 1.5 0 0 1 .5 2.915l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99A1.5 1.5 0 0 1 8 5"></path>
+                            </svg></div>
+                        <h4 class="card-title">Security</h4>
+                        <p class="card-text">Turbo Terrier was built with security and stability in mind. We take the utmost care into ensuring the security and privacy of your data while also minimizing requests to BU servers to ensure our application does not excessively stress the student link servers.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="height: 300px;">
+                    <div class="card-body p-4">
+                        <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center d-inline-block mb-3 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-lightning-charge-fill">
+                                <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"></path>
+                            </svg></div>
+                        <h4 class="card-title">Beat the System</h4>
+                        <p class="card-text">Robots hands faster than human hands. Beat the pesky hoarders, illegally holding a classes for their "friends" at Turbo speed. With our premium offerings, in the worst case, a class needs only be open for a little over 3 seconds for the bot to lock in <sup>3</sup>!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="height: 300px;">
+                    <div class="card-body p-4">
+                        <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center d-inline-block mb-3 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-peace">
+                                <path d="M7.5 1.018a7 7 0 0 0-4.79 11.566L7.5 7.793V1.018zm1 0v6.775l4.79 4.79A7 7 0 0 0 8.5 1.018zm4.084 12.273L8.5 9.207v5.775a6.97 6.97 0 0 0 4.084-1.691M7.5 14.982V9.207l-4.084 4.084A6.97 6.97 0 0 0 7.5 14.982M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8"></path>
+                            </svg></div>
+                        <h4 class="card-title">Sleep in Peace</h4>
+                        <p class="card-text">Instead of frantically checking the student link every hour for that one class you need to graduate, the the bot do the checking for you. Heck you can even sleep in through your registration day for all I care! Bots aren't ever late to work :).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="padding-bottom: 24px;">
+        <div class="simple-slider" style="padding-top: 24px;">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;) center center / cover no-repeat;"></div>
+                    <div class="swiper-slide" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;) center center / cover no-repeat;"></div>
+                    <div class="swiper-slide" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;) center center / cover no-repeat;"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container py-4 py-xl-5">
+        <div class="row" style="margin-bottom: 24px;">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2>Pricing</h2>
+                <p class="w-lg-50">Curae hendrerit donec commodo hendrerit egestas tempus, turpis facilisis nostra nunc. Vestibulum dui eget ultrices.</p>
+            </div>
+        </div>
+        <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3 d-xl-flex">
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-body text-center p-4">
+                        <h4 class="fw-bold card-subtitle">Free Demo</h4>
+                        <h4 class="display-5 fw-bold card-title">$0</h4>
+                        <p>Test out the Registration Bot before committing to a purchase!</p>
+                    </div>
+                </div>
+                <div class="bg-body-tertiary border rounded border-0 p-4">
+                    <ul class="list-unstyled">
+                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
+                                </svg></span><span>Register for any 1 class</span></li>
+                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
+                                </svg></span><span>Checks up to 5 times per minute&nbsp;<sup>1&nbsp;</sup>to see if you class is open</span></li>
+                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
+                                </svg></span><span>Limited support for bugs</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-primary border-2 mb-4">
+                    <div class="card-body text-center p-4"><span class="badge rounded-pill bg-primary position-absolute top-0 start-50 translate-middle text-uppercase">Most Popular</span>
+                        <h4 class="fw-bold card-subtitle">Premium [Fall/Spring]</h4>
+                        <h4 class="display-5 fw-bold card-title">$19.99<span class="fs-4 fw-normal text-muted">/semester</span></h4>
+                        <p>Get unlimited access for registrations for a regular Fall/Spring semester.</p>
+                    </div>
+                </div>
+                <div class="bg-body-tertiary border rounded border-0 p-4">
+                    <ul class="list-unstyled">
+                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
+                                </svg></span><span>Unlimited Registrations for the semester</span></li>
+                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
+                                </svg></span><span>Up to 50 times per minute <sup>1 2</sup> to see if your class is open.</span></li>
+                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
+                                </svg></span><span>Cloud monitoring service that will watch 24/7 to make sure your bot is running and alert you to any problems.</span></li>
+                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
+                                </svg></span><span>Premium support for bugs, feature requests, and setup</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-body text-center p-4">
+                        <h4 class="fw-bold card-subtitle">Premium [Summer]</h4>
+                        <h4 class="display-5 fw-bold card-title">$11.99<span class="fs-4 fw-normal text-muted">/semester</span></h4>
+                        <p>Get unlimited access for registrations for one of the summer sessions.</p>
+                    </div>
+                </div>
+                <div class="bg-body-tertiary border rounded border-0 p-4">
+                    <ul class="list-unstyled">
+                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
+                                </svg></span><span>Unlimited Registrations for the semester</span></li>
+                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
+                                </svg></span><span>Up to 50 requests/minute</span></li>
+                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
+                                </svg></span><span>Cloud monitoring service that will watch 24/7 to make sure your bot is running and alert you to any problems.</span></li>
+                        <li class="d-flex mb-2"><span class="bs-icon-xs bs-icon-rounded bs-icon-primary-light bs-icon me-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-lg">
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"></path>
+                                </svg></span><span>Premium support for bugs, feature requests, and setup</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-bottom: 24px;">
+        <section>
+            <div class="row" style="margin-bottom: 24px;margin-top: 12px;">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <h2>FAQ</h2>
+                    <p class="w-lg-50">Frequently Asked Questions answering your most pressing concerns!</p>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div id="faqlist" class="accordion accordion-flush">
+                            <div class="border rounded-0 accordion-item">
+                                <h2 class="accordion-header"><button class="btn accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#content-accordion-1">What does the "x requests/minute" mean above?</button></h2>
+                                <div id="content-accordion-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                    <p class="accordion-body"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                </div>
+                            </div>
+                            <div class="border rounded-0 accordion-item">
+                                <h2 class="accordion-header"><button class="btn accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#content-accordion-2">How does Turbo Terrier compare with BU Ninja?</button></h2>
+                                <div id="content-accordion-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                    <p class="accordion-body"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                </div>
+                            </div>
+                            <div class="border rounded-0 accordion-item">
+                                <h2 class="accordion-header"><button class="btn accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#content-accordion-2">I don't want to have to run this bot on my device. Can't you run it for me?</button></h2>
+                                <div id="content-accordion-6" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                    <p class="accordion-body"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                </div>
+                            </div>
+                            <div class="border rounded-0 accordion-item">
+                                <h2 class="accordion-header"><button class="btn accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#content-accordion-3">Do you have access to my BU credentials?</button></h2>
+                                <div id="content-accordion-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                    <p class="accordion-body"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                </div>
+                            </div>
+                            <div class="border rounded-0 accordion-item">
+                                <h2 class="accordion-header"><button class="btn accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#content-accordion-4">Where can I contact you?</button></h2>
+                                <div id="content-accordion-4" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                    <p class="accordion-body"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                </div>
+                            </div>
+                            <div class="border rounded-0 accordion-item">
+                                <h2 class="accordion-header"><button class="btn accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#content-accordion-5">Do you give any refunds?</button></h2>
+                                <div id="content-accordion-5" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                    <p class="accordion-body"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                </div>
+                            </div>
+                            <div class="border rounded-0 accordion-item">
+                                <h2 class="accordion-header"><button class="btn accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#content-accordion-5">Why do you only check for open courses x times per minute. Can't you check 1000 times per second to see if a course is open to make it impossible to miss an opportunity?&nbsp;</button></h2>
+                                <div id="content-accordion-7" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                    <p class="accordion-body"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer class="text-center bg-dark">
+        <div class="container text-white py-4 py-lg-5">
+            <ul class="list-inline">
+                <li class="list-inline-item me-4"><a class="link-light" href="#">Privacy Policy</a></li>
+                <li class="list-inline-item me-4"><a class="link-light" href="#">Refund Policy</a></li>
+                <li class="list-inline-item"><a class="link-light" href="#">Terms of Service</a></li>
+            </ul>
+            <ul class="list-inline">
+                <li class="list-inline-item me-4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-github text-light" style="font-size: 24px;">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8"></path>
+                    </svg></li>
+                <li class="list-inline-item me-4"></li>
+                <li class="list-inline-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-reddit text-light" style="font-size: 24px;">
+                        <path d="M6.167 8a.831.831 0 0 0-.83.83c0 .459.372.84.83.831a.831.831 0 0 0 0-1.661m1.843 3.647c.315 0 1.403-.038 1.976-.611a.232.232 0 0 0 0-.306.213.213 0 0 0-.306 0c-.353.363-1.126.487-1.67.487-.545 0-1.308-.124-1.671-.487a.213.213 0 0 0-.306 0 .213.213 0 0 0 0 .306c.564.563 1.652.61 1.977.61zm.992-2.807c0 .458.373.83.831.83.458 0 .83-.381.83-.83a.831.831 0 0 0-1.66 0z"></path>
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.828-1.165c-.315 0-.602.124-.812.325-.801-.573-1.9-.945-3.121-.993l.534-2.501 1.738.372a.83.83 0 1 0 .83-.869.83.83 0 0 0-.744.468l-1.938-.41a.203.203 0 0 0-.153.028.186.186 0 0 0-.086.134l-.592 2.788c-1.24.038-2.358.41-3.17.992-.21-.2-.496-.324-.81-.324a1.163 1.163 0 0 0-.478 2.224c-.02.115-.029.23-.029.353 0 1.795 2.091 3.256 4.669 3.256 2.577 0 4.668-1.451 4.668-3.256 0-.114-.01-.238-.029-.353.401-.181.688-.592.688-1.069 0-.65-.525-1.165-1.165-1.165z"></path>
+                    </svg></li>
+            </ul>
+            <p class="text-secondary mb-0">Copyright © 2024 Turbo Terrier</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/Simple-Slider-swiper-bundle.min.js?h=e0c0f6a33b1ca78b2a1df838a346a344"></script>
+    <script src="assets/js/Simple-Slider.js?h=84b1d7cbf88bb21b37fb412ca8f94640"></script>
+</body>
+
+</html>

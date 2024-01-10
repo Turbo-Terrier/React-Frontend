@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Turbo Terrier | The BU Class Registration Bot</title>
+    <meta name="google-signin-client_id" content="625855115094-emsoq1dbbupaunb25ms2uiu3ppofie1f.apps.googleusercontent.com">
+    <meta name="description" content="Automatically register for your Boston University courses at the first opening seat! Live stress free, carefree and leave it all to Turbo Terrier!">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://turboterrier.com/assets/img/Main Logo.jpeg">
+    <link rel="icon" type="image/png" sizes="800x800" href="assets/img/Circle%20Logo.png?h=b4df40943cbf612a1bc25432350eb9e7">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Antic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
+    <link rel="stylesheet" href="assets/css/swiper-icons.css?h=c7acc97a8ef16e20b0cd8626a5c9c098">
+    <link rel="stylesheet" href="assets/css/accordion-faq-list.css?h=f47106324583193c7d3c36c0bd40c232">
+    <link rel="stylesheet" href="assets/css/Black-Navbar.css?h=5ba3564199f115ae77dd64b33b7a4328">
+    <link rel="stylesheet" href="assets/css/Feature-Block-Image-Three-With-Full-Wide-Screen.css?h=aaeaeebb1ae70daccf6a87a810082d97">
+    <link rel="stylesheet" href="assets/css/Navbar-Centered-Brand-Dark-icons.css?h=befd8a398792e305b7ffd4a176b5b585">
+    <link rel="stylesheet" href="assets/css/Pricing-Duo-badges.css?h=966f4a3faf034d0f7f9779567201fb70">
+    <link rel="stylesheet" href="assets/css/Simple-Slider-swiper-bundle.min.css?h=b2e8d5a1d0e80833f32608dcfff200b6">
+    <link rel="stylesheet" href="assets/css/Simple-Slider.css?h=da830b6503e0457b5735b0129f20b163">
+    <link rel="stylesheet" href="assets/css/Toggle-Switch-toggle-switch.css?h=4a2791a5f7e4c5f54cb30ecec8fa2f1a">
+    <link rel="stylesheet" href="assets/css/Toggle-Switch.css?h=960d853b5b62c1ab31319088dc55dd5e">
+</head>
+
+<body>
+    <div>
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Google OAuth Sign In</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" style="height: 100px;">
+                        <div class="d-flex d-xl-flex justify-content-center justify-content-xl-center"><button class="btn btn-primary disabled d-flex d-xl-flex justify-content-center align-items-center justify-content-xl-center align-items-xl-center" type="button" style="width: 100%;padding: 2px;margin: 3px;" disabled=""><img class="d-xl-flex" src="assets/img/colourful-google-logo-on-white-background-free-vector.jpg?h=b765ad122354a74d27a92f2fbd11ac72" style="width: 36px;height: 36px;">&nbsp; &nbsp; Sign in with Google</button></div>
+                        <p class="fs-6 fw-semibold text-center text-danger-emphasis">* Note you must sign in with you <span style="color: rgb(255, 15, 0); background-color: rgb(255, 255, 255);">@bu.edu</span> email *</p>
+                    </div>
+                    <div class="modal-footer d-flex d-md-flex justify-content-center justify-content-md-center">
+                        <form>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" checked=""><label class="form-check-label" for="formCheck-1">I agree to the abide by the <a href="/tos">Terms of Service</a>.</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2" checked=""><label class="form-check-label" for="formCheck-2">I have acknowledged the<a href="/privacy"> Privacy Policy</a>.</label></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid d-flex d-xl-flex justify-content-center heading-container" style="background: linear-gradient(31deg, rgb(1,17,30), rgb(13,36,62) 63%, rgb(46,70,92)), linear-gradient(31deg, rgb(1,17,30), rgb(13,36,62) 63%, rgb(46,70,92));padding-bottom: 10px;">
+        <div class="row d-lg-flex accordion-header">
+            <div class="col d-flex d-sm-flex justify-content-center align-items-center justify-content-sm-center"><img class="d-sm-flex" src="assets/img/No%20background.png?h=b92feec1ed1e7748f0d3e690781ff75b" style="width: 200px;height: 200px;margin: 25px;"></div>
+            <div class="col d-flex justify-content-center align-items-center justify-content-xl-center align-items-xl-center" style="padding-bottom: 24px;padding-right: 0px;padding-left: 0px;">
+                <div class="row d-inline-block">
+                    <div class="col d-flex justify-content-center">
+                        <h1 class="display-2 text-nowrap text-light d-sm-flex d-xl-flex">Turbo Terrier</h1>
+                    </div>
+                    <div class="col">
+                        <hr class="d-block" style="height: 8px;background: var(--bs-body-bg);">
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <h1 class="display-6 text-nowrap text-light">The BU Registration Bot</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-md bg-dark py-3" data-bs-theme="dark">
+        <div class="container"><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-6"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-6">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" style="padding-right: 16px;padding-left: 16px;"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item" style="padding-right: 16px;padding-left: 16px;"><a class="nav-link" href="#">Pricing</a></li>
+                    <li class="nav-item" style="padding-left: 16px;"><a class="nav-link" href="#">FAQ</a></li>
+                </ul>
+                <div class="d-md-none my-2"><button class="btn btn-primary" type="button">Login/Register</button></div>
+            </div>
+            <div class="d-none d-md-block"><a class="btn btn-light me-2" role="button" href="#" style="border-radius: 5px;">Dashboard (only visible after login)</a><a class="btn btn-primary" role="button" href="#" style="border-radius: 5px;">Login/Logout</a></div>
+        </div>
+    </nav>
+    <div class="container" style="padding-top: 24px;padding-bottom: 24px;border-bottom: 1px solid var(--bs-gray-500) ;">
+        <div class="row mb-2">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h3 class="fw-bold">Application Token</h3>
+                <p class="text-muted">This token is required to authenticate yourself in the Turbo Terrier Bot application. See the download and usage instructions below for details.</p>
+            </div>
+        </div>
+        <form class="d-flex justify-content-center flex-wrap" method="post">
+            <div class="mb-3"><input class="form-control" type="email" name="email" value="ANOISANFNnASDASDOISAJOIF" readonly=""></div>
+            <div class="mb-3"><button class="btn btn-success ms-2" type="submit" style="border-radius: 5px;">Copy Token</button><button class="btn btn-danger ms-2" type="submit" style="border-radius: 5px;box-shadow: 0px 0px rgb(0,0,0);">Reset Token</button></div>
+        </form>
+    </div>
+    <div class="container" style="padding-top: 24px;padding-bottom: 24px;border-bottom: 1px solid var(--bs-gray-500) ;">
+        <div class="row mb-2">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h3 class="fw-bold">Access Level</h3>
+                <p>You can view and manage your access level to the Turbo Terrier application including purchasing access for additional semesters.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" style="min-width: 250px;padding-bottom: 12px;">
+                <h4 class="d-flex d-sm-flex justify-content-center justify-content-sm-center">Current Access</h4>
+                <p class="text-bg-light" style="height: 312px;border-width: 2px;border-style: inset;padding: 12px;margin: 12px;">You have 1 demo credit</p>
+            </div>
+            <div class="col" style="min-width: 350px;padding-left: 0px;padding-right: 0px;">
+                <h4 class="d-flex d-sm-flex d-lg-flex justify-content-center justify-content-sm-center justify-content-lg-center">Purchase Access</h4>
+                <div class="simple-slider">
+                    <div class="swiper-container" style="height: 312px;">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" style="height: 312px;"><script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+<stripe-pricing-table pricing-table-id="prctbl_1OWLA9GSpFPHBgMOLr9QyECZ"
+publishable-key="pk_test_51OUgSKGSpFPHBgMOjWL9qJziecgyjGxrHZj4qyYWigUGzhfSRifnNA8CPv06lvjAimeZlijueUBR8UmU6TUXXgLE00osYTYa5A">
+</stripe-pricing-table></div>
+                            <div class="swiper-slide" style="height: 312px;"><script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+<stripe-pricing-table pricing-table-id="prctbl_1OWLAsGSpFPHBgMO8rBxwGx7"
+publishable-key="pk_test_51OUgSKGSpFPHBgMOjWL9qJziecgyjGxrHZj4qyYWigUGzhfSRifnNA8CPv06lvjAimeZlijueUBR8UmU6TUXXgLE00osYTYa5A">
+</stripe-pricing-table></div>
+                            <div class="swiper-slide" style="height: 312px;"><script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+<stripe-pricing-table pricing-table-id="prctbl_1OWHSwGSpFPHBgMOaP0yzAKQ"
+publishable-key="pk_test_51OUgSKGSpFPHBgMOjWL9qJziecgyjGxrHZj4qyYWigUGzhfSRifnNA8CPv06lvjAimeZlijueUBR8UmU6TUXXgLE00osYTYa5A">
+</stripe-pricing-table></div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="d-flex d-md-flex justify-content-start justify-content-md-start swiper-button-prev" style="margin-left: 0px;"></div>
+                        <div class="d-flex d-md-flex justify-content-end justify-content-md-end swiper-button-next" style="margin-right: 0px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="padding-bottom: 24px;padding-top: 24px;border-bottom: 1px solid var(--bs-gray-500) ;">
+        <div class="row mb-2">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h3 class="fw-bold">Download &amp; Usage Instructions</h3>
+                <p class="text-muted">This token is required to authenticate yourself in the Turbo Terrier Bot application</p>
+            </div>
+        </div>
+        <div class="row" style="padding: 5px;">
+            <div class="col">
+                <div><a class="btn btn-primary" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse-3" href="#collapse-3" role="button" style="width: 100%;">Installation &amp; Setup Instructions</a>
+                    <div class="collapse" id="collapse-3">
+                        <p class="text-bg-light" style="border-right: 1px solid var(--swiper-theme-color);border-bottom: 1px solid var(--swiper-theme-color);border-left: 1px solid var(--swiper-theme-color);padding: 3px;">Collapse content.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 5px;">
+            <div class="col">
+                <div><a class="btn btn-primary" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse-2" href="#collapse-2" role="button" style="width: 100%;">Download Application</a>
+                    <div class="collapse" id="collapse-2">
+                        <p class="text-bg-light" style="border-right: 1px solid var(--swiper-theme-color);border-bottom: 1px solid var(--swiper-theme-color);border-left: 1px solid var(--swiper-theme-color);padding: 3px;">Collapse content.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="padding-top: 24px;padding-bottom: 24px;border-bottom: 1px solid var(--bs-gray-500) ;">
+        <div class="row mb-2">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h3 class="fw-bold">Watchdog Monitoring</h3>
+                <p class="text-center text-muted">If for any reason, we detect Turbo Terrier is no longer running on your device, Watchdog can alert you via text, email, or a phone call so you can act accordingly from there</p>
+            </div>
+        </div>
+        <div class="row d-xl-flex">
+            <div class="col d-flex d-lg-flex d-xl-flex justify-content-end align-items-center">
+                <p class="text-nowrap fw-semibold d-xl-flex" style="transform: translate(7px) translateY(7px);">Enable Watchdog</p>
+            </div>
+            <div class="col d-flex d-xl-flex justify-content-start align-items-center justify-content-xl-start align-items-xl-center"><label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+</label></div>
+        </div>
+    </div>
+    <div class="container" style="padding-top: 24px;padding-bottom: 24px;border-bottom: 1px solid var(--bs-gray-500) ;">
+        <div class="row mb-2">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h3 class="fw-bold">Your Usage Statistics</h3>
+                <p class="text-muted">See how you have used the Turbo Terrier app to race ahead in registrations!</p>
+            </div>
+        </div>
+        <div class="text-center text-white-50 bg-primary border rounded border-0 p-3">
+            <div class="row row-cols-1 row-cols-sm-3">
+                <div class="col">
+                    <div class="p-3">
+                        <h4 class="display-5 fw-bold text-white mb-0">3+</h4>
+                        <p class="mb-0">total courses registered!</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="p-3">
+                        <p class="mb-0">Checked</p>
+                        <h4 class="display-5 fw-bold text-white mb-0">1245+</h4>
+                        <p class="mb-0">times to see if a course was open!</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="p-3">
+                        <p class="mb-0">Spent</p>
+                        <h4 class="display-5 fw-bold text-white mb-0">67+</h4>
+                        <p class="mb-0">hours running!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="position-relative py-4 py-xl-5">
+        <div class="container position-relative">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 col-lg-4 col-xl-4">
+                    <div class="d-flex flex-column justify-content-center align-items-start h-100">
+                        <h2>Contact us</h2>
+                        <p class="w-lg-50">For your convenience, you may contact us either via by email or through the attached support form on this page. For faster service, we suggest using the attached support form instead of an email.</p>
+                        <div class="d-flex align-items-center p-3">
+                            <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope">
+                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
+                                </svg></div>
+                            <div class="px-2">
+                                <h6 class="mb-0">Email</h6>
+                                <p class="mb-0">support@turboterrier.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-5 col-xl-4">
+                    <div>
+                        <form class="p-3 p-xl-4" method="post">
+                            <div class="mb-3"></div><label class="form-label fw-semibold">What is the reason for your message?</label><select class="form-select" style="padding: 6px 12px;margin: 0px 0px 16px;">
+                                <option value="" selected=""></option>
+                                <option value="bug">Bug Report</option>
+                                <option value="billing">Billing Concern</option>
+                                <option value="feature">Feature Request</option>
+                                <option value="other">Other Support</option>
+                            </select><label class="form-label fw-semibold">Leave a short message here:</label>
+                            <div class="mb-3"><textarea class="form-control" id="message-1" name="message" rows="6" placeholder="Message" style="margin-bottom: 16px;"></textarea></div><label class="form-label fw-semibold">Attachments:</label><input class="form-control" type="file" style="margin-bottom: 16px;">
+                            <div><button class="btn btn-primary d-block w-100" type="submit">Send </button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="text-center bg-dark">
+        <div class="container text-white py-4 py-lg-5">
+            <ul class="list-inline">
+                <li class="list-inline-item me-4"><a class="link-light" href="#">Privacy Policy</a></li>
+                <li class="list-inline-item me-4"><a class="link-light" href="#">Refund Policy</a></li>
+                <li class="list-inline-item"><a class="link-light" href="#">Terms of Service</a></li>
+            </ul>
+            <ul class="list-inline">
+                <li class="list-inline-item me-4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-github text-light" style="font-size: 24px;">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8"></path>
+                    </svg></li>
+                <li class="list-inline-item me-4"></li>
+                <li class="list-inline-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-reddit text-light" style="font-size: 24px;">
+                        <path d="M6.167 8a.831.831 0 0 0-.83.83c0 .459.372.84.83.831a.831.831 0 0 0 0-1.661m1.843 3.647c.315 0 1.403-.038 1.976-.611a.232.232 0 0 0 0-.306.213.213 0 0 0-.306 0c-.353.363-1.126.487-1.67.487-.545 0-1.308-.124-1.671-.487a.213.213 0 0 0-.306 0 .213.213 0 0 0 0 .306c.564.563 1.652.61 1.977.61zm.992-2.807c0 .458.373.83.831.83.458 0 .83-.381.83-.83a.831.831 0 0 0-1.66 0z"></path>
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.828-1.165c-.315 0-.602.124-.812.325-.801-.573-1.9-.945-3.121-.993l.534-2.501 1.738.372a.83.83 0 1 0 .83-.869.83.83 0 0 0-.744.468l-1.938-.41a.203.203 0 0 0-.153.028.186.186 0 0 0-.086.134l-.592 2.788c-1.24.038-2.358.41-3.17.992-.21-.2-.496-.324-.81-.324a1.163 1.163 0 0 0-.478 2.224c-.02.115-.029.23-.029.353 0 1.795 2.091 3.256 4.669 3.256 2.577 0 4.668-1.451 4.668-3.256 0-.114-.01-.238-.029-.353.401-.181.688-.592.688-1.069 0-.65-.525-1.165-1.165-1.165z"></path>
+                    </svg></li>
+            </ul>
+            <p class="text-secondary mb-0">Copyright © 2024 Turbo Terrier</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/Simple-Slider-swiper-bundle.min.js?h=e0c0f6a33b1ca78b2a1df838a346a344"></script>
+    <script src="assets/js/Simple-Slider.js?h=84b1d7cbf88bb21b37fb412ca8f94640"></script>
+</body>
+
+</html>
