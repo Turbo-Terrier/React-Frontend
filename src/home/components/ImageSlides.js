@@ -1,7 +1,6 @@
-import '../css/simple-slider.css'
-import '../css/simple-slider-swiper-bundle.min.css'
 import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image'
+import Container from 'react-bootstrap/Container'
 
 function ImageSlides() {
 
@@ -11,7 +10,7 @@ function ImageSlides() {
 
 
     return (
-        <div className="container" style={containerStyle}>
+        <Container style={containerStyle}>
             <Carousel slide={true} interval={6000}>
                 <Carousel.Item>
                     <Image src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" fluid />
@@ -37,7 +36,7 @@ function ImageSlides() {
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>
-        </div>
+        </Container>
     );
 }
 

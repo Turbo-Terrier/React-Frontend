@@ -23,8 +23,8 @@ function HomeIntro() {
                         <strong>Here is how it works:</strong>
                         <br />
                         1. Begin by registering an account on this site by clicking the{' '}
-                        <button className="btn btn-primary" type="button" style={buttonStyle}>
-                            Login
+                        <button className="btn btn-secondary" type="button" style={buttonStyle}>
+                            Login/Register
                         </button>
                         &nbsp;button on our site navbar.
                         <br />

@@ -20,9 +20,14 @@ function LoginModal(props) {
         }
     }
 
+    function closeModal() {
+        setCanOAuth(false)
+        setOpenedModal(false)
+    }
+
     return (
         <>
-            <Modal show={openedModal} onHide={() => setOpenedModal(false)}>
+            <Modal show={openedModal} onHide={closeModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Google OAuth Sign In</Modal.Title>
                 </Modal.Header>

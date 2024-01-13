@@ -4,17 +4,17 @@ function Footer() {
             <div className="container text-white py-4 py-lg-5">
                 <ul className="list-inline">
                     <li className="list-inline-item me-4">
-                        <a className="link-light" href="#">
+                        <a className="link-light" href="/privacy">
                             Privacy Policy
                         </a>
                     </li>
                     <li className="list-inline-item me-4">
-                        <a className="link-light" href="#">
+                        <a className="link-light" href="/refunds">
                             Refund Policy
                         </a>
                     </li>
                     <li className="list-inline-item">
-                        <a className="link-light" href="#">
+                        <a className="link-light" href="/tos">
                             Terms of Service
                         </a>
                     </li>

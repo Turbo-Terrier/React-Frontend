@@ -29,27 +29,26 @@ function Navbar(props) {
                                 </a>
                             </li>
                             <li className="nav-item" style={{ paddingRight: '16px', paddingLeft: '16px' }}>
-                                <a className="nav-link" id="pricing" href="#">
+                                <a className="nav-link" href="#pricing">
                                     Pricing
                                 </a>
                             </li>
                             <li className="nav-item" style={{ paddingLeft: '16px' }}>
-                                <a className="nav-link" id="faq" href="#">
+                                <a className="nav-link" href="#faq">
                                     FAQ
                                 </a>
                             </li>
                         </ul>
-                        //this button is for mobile
                         <div className="d-md-none my-2">
-                            <button className="btn btn-primary" type="button" onClick={() => setOpenedModal(true)}>
-                                {loggedIn ? 'Logout' : 'Login'}
+                            <button className="btn btn-secondary" type="button" onClick={() => setOpenedModal(true)}>
+                                {loggedIn ? 'Logout' : 'Login/Register'}
                             </button>
                         </div>
                     </div>
                     <div className="d-none d-md-block">
                         {loggedIn ? (<a className="btn btn-light me-2" role="button" href="#" style={{ borderRadius: '5px' }}>Dashboard</a>) : ""}
-                        <a className="btn btn-primary" role="button" href="#" style={{ borderRadius: '5px' }} onClick={() => setOpenedModal(true)}>
-                            {loggedIn ? 'Logout' : 'Login'}
+                        <a className="btn btn-secondary" role="button" href="#" style={{ borderRadius: '5px' }} onClick={() => setOpenedModal(true)}>
+                            {loggedIn ? 'Logout' : 'Login/Register'}
                         </a>
                     </div>
                 </div>

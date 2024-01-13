@@ -37,7 +37,7 @@ function TurboTerrierFeatures() {
                                 </svg>
                             </div>
                             <h4 className="card-title">Beat the System</h4>
-                            <p className="card-text">Robots hands faster than human hands. Beat the pesky hoarders, illegally holding a classes for their "friends" at Turbo speed. With our premium offerings, in the worst case, a class needs only be open for a little over 3 seconds for the bot to lock in <sup>3</sup>!</p>
+                            <p className="card-text">Robots hands faster than human hands. Beat the pesky hoarders, illegally holding a classes for their "friends" at Turbo speed. With our premium offerings, in the worst case, a class needs only be open for a little over 3 seconds for the bot to lock in!</p>
                         </div>
                     </div>
                 </div>
