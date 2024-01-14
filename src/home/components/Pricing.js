@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { Container, Row, Col, Card, Badge, Button } from 'react-bootstrap';
-import '../css/pricing-duo-badges.css'
+import '../../css/pricing-duo-badges.css'
 
 function Pricing() {
 
     const containerStyle = {
-        paddingBottom: '24px',
+        borderBottom: '1px solid var(--bs-gray-500)'
     };
 
     return (

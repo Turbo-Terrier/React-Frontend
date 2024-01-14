@@ -1,8 +1,6 @@
 function HomeIntro() {
     const containerStyle = {
-        paddingLeft: '18px',
-        paddingRight: '18px',
-        paddingTop: '24px',
+        borderBottom: '1px solid var(--bs-gray-500)'
     };
 
     const buttonStyle = {
@@ -10,8 +8,8 @@ function HomeIntro() {
     };
 
     return (
-        <div className="container d-xxl-flex justify-content-xxl-center" style={containerStyle} data-bs-target="#home">
-            <div className="row gy-4 mb-5">
+        <div className="container justify-content-xxl-center py-4 py-xl-5" style={containerStyle} data-bs-target="#home">
+            <div className="row gy-4">
                 <div className="col-md-8 col-xl-6 col-xxl-11 text-start mx-auto">
                     <h2 style={{ textAlign: 'left' }}>What is Turbo Terrier?</h2>
                     <p className="w-lg-50" style={{ textAlign: 'left' }}>

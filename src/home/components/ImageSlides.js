@@ -5,12 +5,12 @@ import Container from 'react-bootstrap/Container'
 function ImageSlides() {
 
     const containerStyle = {
-        paddingBottom: '24px',
+        borderBottom: '1px solid var(--bs-gray-500)'
     };
 
 
     return (
-        <Container style={containerStyle}>
+        <Container className="py-4 py-xl-5" style={containerStyle}>
             <Carousel slide={true} interval={6000}>
                 <Carousel.Item>
                     <Image src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" fluid />

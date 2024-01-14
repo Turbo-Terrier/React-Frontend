@@ -1,4 +1,5 @@
 
+import Logo from '../img/no-bg-logo.png'
 
 function Header() {
     const containerStyle = {
@@ -21,7 +22,7 @@ function Header() {
         <div className="container-fluid d-flex d-xl-flex justify-content-center heading-container" style={containerStyle}>
             <div className="row d-lg-flex accordion-header">
                 <div className="col d-flex d-sm-flex justify-content-center align-items-center justify-content-sm-center">
-                    <img className="d-sm-flex" src="assets/img/no-bg-logo.png?h=b92feec1ed1e7748f0d3e690781ff75b" style={logoStyle} alt="Logo" />
+                    <img className="d-sm-flex" src={Logo} style={logoStyle} alt="Logo" />
                 </div>
                 <div className="col d-flex justify-content-center align-items-center justify-content-xl-center align-items-xl-center" style={{ paddingBottom: '24px', paddingRight: '0px', paddingLeft: '0px' }}>
                     <div className="row d-inline-block">

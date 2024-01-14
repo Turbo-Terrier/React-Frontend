@@ -2,6 +2,7 @@ import '../css/modal.css'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import {useState} from "react";
+import GoogleLogo from '../img/google-login-logo.jpg'
 
 
 function LoginModal(props) {
@@ -42,7 +43,7 @@ function LoginModal(props) {
                         >
                             <img
                                 className="d-block"
-                                src="assets/img/google-login-logo.jpg?h=b765ad122354a74d27a92f2fbd11ac72"
+                                src={GoogleLogo}
                                 alt="Google Logo"
                                 style={{ width: '36px', height: '36px' }}
                             />

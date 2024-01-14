@@ -1,11 +1,11 @@
 import React from 'react';
-import '../css/feature-block.css'
-import '../css/swiper-icons.css'
+import '../../css/feature-block.css'
+import '../../css/swiper-icons.css'
 
 function TurboTerrierFeatures() {
 
     const containerStyle = {
-        paddingBottom: '24px',
+        borderBottom: '1px solid var(--bs-gray-500)'
     };
 
     const cardStyle = {
@@ -13,7 +13,7 @@ function TurboTerrierFeatures() {
     };
 
     return (
-        <div className="container" style={containerStyle}>
+        <div className="container py-4 py-xl-5" style={containerStyle}>
             <div className="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
                 <div className="col">
                     <div className="card">

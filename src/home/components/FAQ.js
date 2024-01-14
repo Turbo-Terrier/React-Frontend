@@ -2,7 +2,7 @@ import { Accordion, Card, Button, Container } from 'react-bootstrap';
 
 function Faq() {
     return (
-        <Container fluid style={{ paddingBottom: '24px' }} id={"faq"}>
+        <Container fluid className={"py-4 py-xl-5"} id={"faq"}>
             <section>
                 <div className="row" style={{ marginBottom: '24px', marginTop: '12px' }}>
                     <div className="col-md-8 col-xl-6 text-center mx-auto">
