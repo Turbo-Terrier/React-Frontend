@@ -1,0 +1,21 @@
+.disclaimer {
+    text-decoration: underline;
+}
+
+.disclaimer-1 {
+    color: blue;
+}
+
+.disclaimer-2 {
+    color: #9ccdfe;
+}
+
+.disclaimer:hover {
+    color: deeppink;
+    cursor: pointer;
+}
+
+.disclaimer:focus {
+    color: deeppink;
+    cursor: pointer;
+}

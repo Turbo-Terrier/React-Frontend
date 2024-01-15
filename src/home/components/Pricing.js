@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { Container, Row, Col, Card, Badge, Button } from 'react-bootstrap';
+import {Container, Row, Col, Card, Badge, Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import '../../css/pricing-duo-badges.css'
+import Cookies from "js-cookie";
+import {Disclaimer, DisclaimerStyle} from "../../components/Disclaimer";
+import Modal from "react-bootstrap/Modal";
+import GoogleLogo from "../../img/google-login-logo.jpg";
+import popover from "bootstrap/js/src/popover";
 
 function Pricing() {
 
@@ -14,7 +19,7 @@ function Pricing() {
                 <Col md={8} xl={6} className="text-center mx-auto">
                     <h2>Pricing</h2>
                     <p className="w-lg-50">
-                        View our pricing table, final purchases can only be made on our account dashboard after logging in!
+                        View our pricing table; final purchases can only be made on our account dashboard after logging in!
                     </p>
                 </Col>
             </Row>
@@ -22,19 +27,19 @@ function Pricing() {
                 <DemoPricing/>
                 <PremiumPricing/>
             </Row>
-            <Row>
-                <Footnotes/>
-            </Row>
         </Container>
     );
 }
 
-function PremiumPricing() {
+function PremiumPricing({loggedInUser}) {
 
+    let [tieredPricing, setTieredPricing] = useState([])
     let [quantity, setQuantity] = useState(3)
 
     let [unitPrice, setUnitPrice] = useState(-1)
     let [totalPrice, setTotalPrice] = useState(-1)
+
+    let [openModal, setOpenModal] = useState(false)
 
     function incrementQuantity() {
         if (quantity === 16) {
@@ -50,25 +55,31 @@ function PremiumPricing() {
         setQuantity(quantity - 1)
     }
 
+    function prePurchaseConfirmation() {
+        // todo purchase modal
+    }
+
+    useEffect(() => {
+        getPricing().then((pricing) => {
+            setTieredPricing(pricing)
+        })
+    }, [])
     useEffect(() => {
         function calculateUnitPrice() {
-            if (quantity <= 1) {
-                return 7
-            } else if (quantity <= 2) {
-                return 6
-            } else if (quantity <= 3) {
-                return 5.5
-            } else if (quantity <= 4) {
-                return 5
-            } else if (quantity <= 5) {
-                return 4.5
-            } else {
-                return 4
+            let price = -1;
+            for (let index in tieredPricing) {
+                if (quantity >= tieredPricing[index]["required_quantity"]) {
+                    price = tieredPricing[index]["unit_price"]
+                }
             }
+            if (price === -1 && tieredPricing.length > 0) {
+                price = tieredPricing[tieredPricing.length - 1]["unit_price"]
+            }
+            return price
         }
         let up = calculateUnitPrice(quantity)
         setUnitPrice(up)
-    }, [quantity])
+    }, [quantity, tieredPricing])
 
     useEffect(() => {
         setTotalPrice(unitPrice*quantity)
@@ -91,29 +102,154 @@ function PremiumPricing() {
                     </div>
                     <div>
                         <ul className="list-unstyled">
-                            <ProductFeature desc={<>Unlimited Registrations for the purchased semester.</>} premium={true}/>
                             <ProductFeature desc={<>Up to 50 requests/minute
-                                <sup><a href={"#footnote-2"} className="footnote" >2</a> </sup>
-                                to check if a course is open
-                                <sup><a href={"#footnote-3"} className="footnote">3</a> </sup>
+                                <Disclaimer
+                                    id="2"
+                                    style={DisclaimerStyle.STYLE_2}
+                                    description="The requests minute is the number of times per minute the application asks BU is this course open. The higher this number, the smaller the chances you miss an open seat."
+                                /> to check if a course is open
+                                <Disclaimer
+                                    id="3"
+                                    style={DisclaimerStyle.STYLE_2}
+                                    description="The listed request cap is for the entire application. Each course you are trying to register for requires its own request and so the more courses you try to register for, the slower the per-course request rate."
+                                /> <Disclaimer
+                                    id="4"
+                                    style={DisclaimerStyle.STYLE_2}
+                                    description="The per-course request rate is capped at 20 requests/minute for all users."
+                                />
                                 .</>} premium={true}/>
                             <ProductFeature desc={<>Cloud monitoring service that will watch 24/7 to make sure your bot is running and alert you to any problems
-                                <sup><a href={"#footnote-5"} className="footnote">5</a></sup>
+                                <Disclaimer
+                                    id="5"
+                                    style={DisclaimerStyle.STYLE_2}
+                                    description="It is possible your device looses internet, powers off, or the application simply crashes. In such case, we will alert you via text, email, or a call so that you may the appropriate action."
+                                />
                                 .</>} premium={true}/>
                             <ProductFeature desc={<>Premium support for bugs, feature requests, and setup.</>} premium={true}/>
                         </ul>
                     </div>
                     <Row>
-                        <Col><Button className="btn-primary fs-6 fw-bolder d-block w-100 bg-white-300" role="button" onClick={decrementQuantity}>-</Button></Col>
-                        <Col><Button className="btn-primary fs-6 fw-bolder d-block w-100 bg-white-300" role="button" onClick={incrementQuantity}>+</Button></Col>
+                        <Col className="d-flex justify-content-left">
+                            <Button className="fs-6 fw-bolder d-block w-75 bg-white-300" role="button" onClick={decrementQuantity}>-</Button>
+                        </Col>
+                        <Col className="d-flex justify-content-end">
+                            <Button className="fs-6 fw-bolder d-block w-75 bg-white-300" role="button" onClick={incrementQuantity}>+</Button>
+                        </Col>
                     </Row>
+                    {loggedInUser ? (
+                        <>
+                            <Row>
+                                <Col className="d-flex justify-content-center">
+                                    <PurchaseConfirm hook={[openModal, setOpenModal]} quantity={quantity} />
+                                    <Button className="fs-6 fw-bolder d-block w-100 bg-white-300 m-2" role="button" onClick={() => setOpenModal(true)}>Purchase</Button>
+                                </Col>
+                            </Row>
+                        </>
+                    ) : ""}
                 </Card.Body>
             </Card>
         </Col>
     )
 }
 
+function PurchaseConfirm(props) {
+    let [canBuy, setCanBuy] = useState(false)
+    let [openedModal, setOpenedModal] = props.hook
+    let quantity = props.quantity
+
+    async function purchase() {
+        let endpoint = "http://localhost:8080/api/web/v1/create-checkout-session"
+        let userOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Authorization": Cookies.get("jwt-token")
+            },
+            body: JSON.stringify(quantity)
+        }
+        let result = await fetch(endpoint, userOptions)
+        if (result.ok) {
+            let json_resp = await result.json()
+            document.location.href = json_resp
+        } //todo: anytime not authorized logout
+    }
+
+    function updateBuy() {
+        let box3 = document.getElementById("formCheck-3")
+        if (box3.checked) {
+            setCanBuy(true)
+        } else {
+            setCanBuy(false)
+        }
+    }
+
+    const alreadyAgreed = (
+        <Tooltip id="tooltip">
+            You have already agreed to this when you created your account.
+        </Tooltip>
+    )
+
+    return (
+        <>
+            <Modal show={openedModal} onHide={() => setOpenedModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirm Purchase</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Row>
+                        <Col className="d-flex justify-content-center">
+                            Please confirm your purchase of +{quantity} Premium Access credits.
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="d-flex justify-content-center">
+                            <Button
+                                variant="primary"
+                                className={"d-flex justify-content-center align-items-center" + (canBuy ? "" : " disabled")}
+                                disabled={!canBuy}
+                                style={{width: '100%'}}
+                                onClick={purchase}
+                            >
+                                Confirm Purchase
+                            </Button>
+                        </Col>
+                    </Row>
+                </Modal.Body>
+                <Modal.Footer className="d-flex justify-content-center">
+                    <form>
+                        <div className="form-check">
+                            <OverlayTrigger trigger={["hover", "focus"]} placement="top-end" overlay={alreadyAgreed}>
+                                <input checked readOnly className="form-check-input" type="checkbox" id="formCheck-1"/>
+                            </OverlayTrigger>
+                            <label className="form-check-label" htmlFor="formCheck-1">
+                                I agree to abide by the <a href="/tos">Terms of Service</a>.
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <OverlayTrigger trigger={["hover", "focus"]} placement="top-end" overlay={alreadyAgreed}>
+                                <input checked readOnly className="form-check-input" type="checkbox" id="formCheck-2"/>
+                            </OverlayTrigger>
+                            <label className="form-check-label" htmlFor="formCheck-2">
+                                I have acknowledged the <a href="/privacy">Privacy Policy</a>.
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input className="form-check-input" type="checkbox" id="formCheck-3" onClick={updateBuy}/>
+                            <label className="form-check-label" htmlFor="formCheck-2">
+                                I have acknowledged the <a href="/refunds">Refund Policy</a>.
+                            </label>
+                        </div>
+                    </form>
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
+}
+
 function DemoPricing() {
+
     return (
         <Col className="offset-xl-2">
             <Card className="bg-body-tertiary border-0">
@@ -127,13 +263,27 @@ function DemoPricing() {
                     </div>
                     <div>
                         <ul className="list-unstyled">
-                            <ProductFeature desc={<>Allows you to register for any 1 class
-                                <sup><a href={"#footnote-1"}>1</a></sup>
-                                .</>} premium={false}/>
+                            <ProductFeature desc={
+                                <>
+                                    Allows you to register for any one class
+                                    <Disclaimer
+                                        id="1"
+                                        style={DisclaimerStyle.STYLE_1}
+                                        description="Each unique BU user only gets 1 free trial course registration. After you have registered for one free course, you must switch to one of our premium plans to continue using Turbo Terrier."
+                                    />.
+                                </>
+                            } premium={false}/>
                             <ProductFeature desc={<>Up to 5 requests/minute
-                                <sup><a href={"#footnote-2"}>2</a> </sup>
-                                to check if a course is open
-                                <sup><a href={"#footnote-3"}>3</a> </sup>
+                                <Disclaimer
+                                    id="2"
+                                    style={DisclaimerStyle.STYLE_1}
+                                    description="The requests minute is the number of times per minute the application asks BU is this course open. The higher this number, the smaller the chances you miss an open seat."
+                                /> to check if a course is open
+                                <Disclaimer
+                                    id="3"
+                                    style={DisclaimerStyle.STYLE_1}
+                                    description="The listed request cap is for the entire application. Each course you are trying to register for requires its own request and so the more courses you try to register for, the slower the per-course request rate."
+                                />
                                 .</>} premium={false}/>
                             <ProductFeature desc={<>Limited support for bugs only.</>} premium={false}/>
                         </ul>
@@ -141,32 +291,6 @@ function DemoPricing() {
                 </Card.Body>
             </Card>
         </Col>
-    )
-}
-
-function Footnotes() {
-    return (
-        <Col md={9} xl={8} className="text-justify mx-auto">
-            <ul className="list-unstyled text-secondary">
-                <ProductFootnote id="1" desc="Each unique BU user only gets 1 free trial course registration. After you have registered for one free course,
-                            you must switch to one of our premium plans to continue using Turbo Terrier." />
-                <ProductFootnote id="2" desc="The requests minute is the number of times per minute the application asks BU is this course open.
-                            The higher this number, the smaller the chances you miss an open seat." />
-                <ProductFootnote id="3" desc="The listed request cap is for the entire application. Each course you are trying to
-                            register for requires its own request and so the more courses you try to register for, the slower the per-course
-                            request rate." />
-                <ProductFootnote id="4" desc="The per-course request rate is capped at 20 requests/minute for all users." />
-                <ProductFootnote id="5" desc="It is possible your device looses internet, powers off, or the application simply crashes. In such case, we will alert you via text, email, or a call so that you may the appropriate action." />
-            </ul>
-        </Col>
-    )
-}
-
-function ProductFootnote({id, desc}) {
-    return (
-        <li id={"footnote-" + id} style={{margin: "12px"}}>
-            <sup>{id}</sup> {desc}
-        </li>
     )
 }
 
@@ -183,4 +307,17 @@ function ProductFeature({desc, premium}) {
     )
 }
 
-export default Pricing;
+async function getPricing() {
+    let endpoint = "http://localhost:8080/api/web/v1/pricing"
+    let userOptions = {
+        method: "GET",
+        headers: {
+            "Accept": "application/json",
+            "Accept-Encoding": "gzip, deflate, br"
+        },
+    }
+    let response = await fetch(endpoint, userOptions)
+    return await response.json()
+}
+
+export {Pricing, PremiumPricing};

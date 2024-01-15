@@ -13,7 +13,6 @@ function LoginModal(props) {
     function updateSignIn() {
         let box1 = document.getElementById("formCheck-1")
         let box2 = document.getElementById("formCheck-2")
-        console.log(box1)
         if (box1.checked && box2.checked) {
             setCanOAuth(true)
         } else {

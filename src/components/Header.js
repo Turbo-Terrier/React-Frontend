@@ -4,7 +4,6 @@ import Logo from '../img/no-bg-logo.png'
 function Header() {
     const containerStyle = {
         background: 'linear-gradient(31deg, rgb(1,17,30), rgb(13,36,62) 63%, rgb(46,70,92)), linear-gradient(31deg, rgb(1,17,30), rgb(13,36,62) 63%, rgb(46,70,92))',
-        paddingBottom: '10px'
     };
 
     const logoStyle = {
@@ -19,7 +18,7 @@ function Header() {
     };
 
     return (
-        <div className="container-fluid d-flex d-xl-flex justify-content-center heading-container" style={containerStyle}>
+        <div className="container-fluid d-flex d-xl-flex justify-content-center heading-container py-2 py-md-4 py-lg-5" style={containerStyle}>
             <div className="row d-lg-flex accordion-header">
                 <div className="col d-flex d-sm-flex justify-content-center align-items-center justify-content-sm-center">
                     <img className="d-sm-flex" src={Logo} style={logoStyle} alt="Logo" />
