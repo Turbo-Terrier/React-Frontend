@@ -1,37 +1,31 @@
-import {Accordion, Card, Col, Collapse, Row} from "react-bootstrap";
+import {Accordion, Card, Col, Collapse, Row, Toast} from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Collapsable from "../../components/Collapsable";
 import Switch from "../../components/Switch";
 import '../../css/target-course-list.css'
 import Cookies from "js-cookie";
 import app from "../../App";
+import ClarificationPopover from "../../components/ClarificationPopover";
+import {StatusToast, ToastStatus} from "../../components/StatusToast";
+
+
 
 function AppConfigurator() {
 
     let [appSettings, setAppSettings] = useState(null)
+    let [isEmailValid, setIsEmailValid] = useState(true)
+    let [isPhoneValid, setIsPhoneValid] = useState(true)
+    let [messageSaveToast, setMessageSaveToast] = useState({
+        show: false,
+        status: ToastStatus.SUCCESS
+    })
+    let messageSaveToastHook = [messageSaveToast, setMessageSaveToast]
     let settingsHook = [appSettings, setAppSettings]
-
-    useEffect(() => {
-        // todo: add code to make sure that requests are sent to the backend and that they aren't sent too frequently
-        let endpoint = "http://localhost:8080/api/web/v1/user-app-settings"
-        let userOptions = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Authorization": Cookies.get("jwt-token")
-            },
-            body: JSON.stringify(appSettings)
-        }
-        fetch(endpoint, userOptions)
-            .then(() => {
-                console.log("updated!")
-            })
-    }, [appSettings])
+    let emailValidHook = [isEmailValid, setIsEmailValid]
+    let phoneValidHook = [isPhoneValid, setIsPhoneValid]
 
     useEffect(() => {
         let endpoint = "http://localhost:8080/api/web/v1/user-app-settings"
@@ -51,8 +45,6 @@ function AppConfigurator() {
             .catch(error => console.log(error))
     }, [])
 
-    // todo: add code to make sure that requests are sent to the backend and that they aren't sent too frequently
-
     return (
         <>
             {appSettings &&
@@ -66,24 +58,24 @@ function AppConfigurator() {
                         </Col>
                     </Row>
                     <Collapsable id="3" title="Course Selection">
-                        <CourseSelectionForum settingsHook={settingsHook}/>
+                        <CourseSelectionForum settingsHook={settingsHook} messageSaveToastHook={messageSaveToastHook}/>
                     </Collapsable>
                     <Collapsable id="4" title="Registration Settings">
-                        <RegistrationSettings settingsHook={settingsHook}/>
+                        <RegistrationSettings settingsHook={settingsHook} messageSaveToastHook={messageSaveToastHook}/>
                     </Collapsable>
                     <Collapsable id="5" title="Notification Settings">
-                        <NotificationSettings settingsHook={settingsHook}/>
+                        <NotificationSettings settingsHook={settingsHook} messageSaveToastHook={messageSaveToastHook} emailValidHook={emailValidHook} phoneValidHook={phoneValidHook}/>
                     </Collapsable>
                     <Collapsable id="6" title="Other Settings">
-                        <OtherSettings settingsHook={settingsHook}/>
+                        <OtherSettings settingsHook={settingsHook} messageSaveToastHook={messageSaveToastHook}/>
                     </Collapsable>
-                    {/* ... (Similar structure for other sections) */}
+                    <StatusToast messageSaveToastHook={messageSaveToastHook}/>
                 </Container>}
         </>
     );
 }
 
-function OtherSettings({settingsHook}) {
+function OtherSettings({settingsHook, messageSaveToastHook}) {
     let [appSettings, setAppSettings] = settingsHook
 
     return ( //todo add form?
@@ -93,7 +85,7 @@ function OtherSettings({settingsHook}) {
                     label="Console Colors"
                     description="When toggled on, we will print to console using pretty colors. Toggle off if either your console doesn't support colors or you are just a boring person."
                     switched={appSettings["console_colors"]}
-                    onClick={() => handleSwitchClick(settingsHook, "console_colors")}
+                    onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook, "console_colors")}
                 />
             </Col>
             <Col>
@@ -101,15 +93,15 @@ function OtherSettings({settingsHook}) {
                     label="Custom Chrome Driver"
                     description={"In most cases, you shouldn't need to touch this option. Only toggle on if Turbo Terrier is unable to automatically detect your chrome drivers and specify the path to your drivers here."}
                     switched={appSettings["custom_driver"]["enabled"]}
-                    onClick={() => handleSwitchClick(settingsHook, "custom_driver", "enabled")}
+                    onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook, "custom_driver", "enabled")}
                 />
                 <div className="d-xl-flex" style={{width: "80%"}}>
                     <Form.Control
                         type="text"
-                        defaultValue={appSettings["custom_driver"]["driver_path"]}
+                        value={appSettings["custom_driver"]["driver_path"]}
                         placeholder="/path/to/driver"
                         className="form-control-sm"
-                        onChange={(event) => setAppSettings({...appSettings, "custom_driver": {...appSettings["custom_driver"], "driver_path": event.target.value}})}
+                        onChange={(event) => handleInputBoxUpdate(settingsHook, messageSaveToastHook,"custom_driver", {...appSettings["custom_driver"], "driver_path": event.target.value})}
                     />
                 </div>
             </Col>
@@ -118,7 +110,7 @@ function OtherSettings({settingsHook}) {
                     label="Debug"
                     description={"Toggle on to enable debug mode. Debug mode is helpful for reporting bugs with the application."}
                     switched={appSettings["debug_mode"]}
-                    onClick={() => handleSwitchClick(settingsHook, "debug_mode")}
+                    onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"debug_mode")}
                 />
             </Col>
             <Col>
@@ -128,67 +120,90 @@ function OtherSettings({settingsHook}) {
     );
 }
 
-function NotificationSettings({settingsHook}) {
+function NotificationSettings({settingsHook, messageSaveToastHook}) {
     let [appSettings, setAppSettings] = settingsHook
-    //console.log(appSettings)
     return ( //todo add form?
         <>
+            <Row className="g-0 p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" style={{borderBottom: "1px solid var(--bs-secondary-border-subtle)"}}>
+                <Col className="d-flex d-sm-flex justify-content-center justify-content-sm-center">
+                    <div className="align-items-center">
+                        <label className="form-label p-1">
+                            Alert Email&nbsp;&nbsp;
+                            <ClarificationPopover description={"Enter the email which you would like us to use for all communications in this category."} />
+                        </label>
+                        <Form.Control
+                            type="email"
+                            value={appSettings["email"]}
+                            placeholder="Your Email"
+                            className="form-control-sm form-text-input"
+                            onChange={(event) => handleInputBoxUpdate(settingsHook, "email", event.target.value)}
+                        />
+                    </div>
+                </Col>
+                <Col className="d-flex d-sm-flex justify-content-center justify-content-sm-center">
+                    <div className="align-items-center">
+                        <label className="form-label p-1">
+                            Alert Phone&nbsp;&nbsp;
+                            <ClarificationPopover description={"Enter the phone number which you would like us to use for communication in this category."} />
+                        </label>
+                        <Form.Control
+                            type="tel"
+                            value={appSettings["phone"]}
+                            placeholder="Your Phone"
+                            className="form-control-sm"
+                            onChange={(event) => handleInputBoxUpdate(settingsHook, messageSaveToastHook,"phone", event.target.value)}
+                        />
+                    </div>
+                </Col>
+                <Col>
+                    <Switch
+                        label="Updates & News"
+                        description="Toggle on if you allow us to contact you about important updates and news regarding Turbo Terrier via email."
+                        switched={appSettings["allow_update_emails"]}
+                        onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"allow_update_emails")}
+                    />
+                </Col>
+                <Col>
+                    <Switch
+                        label="Promotion & Marketing"
+                        description="Toggle on if you allow us to contact you with offers, discounts and other promotional material regarding Turbo Terrier."
+                        switched={appSettings["allow_marketing_emails"]}
+                        onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"allow_marketing_emails")}
+                    />
+                </Col>
+            </Row>
             <Row className="g-0 p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" style={{borderBottom: "1px solid var(--bs-secondary-border-subtle)"}}>
                 <Col>
                     <Switch
                         label="Registration Notifications"
                         description="Toggle on if you want to be alerted if/when Turbo Terrier successfully registers you for one or more of your target courses."
                         switched={appSettings["registration_notifications"]["enabled"]}
-                        onClick={() => handleSwitchClick(settingsHook, "registration_notifications", "enabled")}
+                        onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"registration_notifications", "enabled")}
                     />
                 </Col>
                 <Col>
                     <Switch
                         label="Email Alerts"
-                        switched={appSettings["registration_notifications"]["email_alerts"]}
-                        onClick={() => handleSwitchClick(settingsHook, "registration_notifications", "email_alerts")}
+                        switched={appSettings["registration_notifications"]["email_alerts"] && appSettings["registration_notifications"]["enabled"]}
+                        disabled={!appSettings["registration_notifications"]["enabled"]}
+                        onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"registration_notifications", "email_alerts")}
                     />
-                    <div className="d-xl-flex" style={{width: "80%"}}>
-                        <Form.Control
-                            type="email"
-                            defaultValue={appSettings["email"]}
-                            placeholder="Your Email"
-                            className="form-control-sm"
-                            onChange={(event) => setAppSettings({...appSettings, "email": event.target.value})}
-                        />
-                    </div>
                 </Col>
                 <Col>
                     <Switch
                         label="Text Alerts"
-                        switched={appSettings["registration_notifications"]["text_alerts"]}
-                        onClick={() => handleSwitchClick(settingsHook, "registration_notifications", "text_alerts")}
+                        switched={appSettings["registration_notifications"]["text_alerts"] && appSettings["registration_notifications"]["enabled"]}
+                        disabled={!appSettings["registration_notifications"]["enabled"]}
+                        onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"registration_notifications", "text_alerts")}
                     />
-                    <div className="d-xl-flex" style={{width: "80%"}}>
-                        <Form.Control
-                            type="tel"
-                            placeholder="Your Phone Number"
-                            className="form-control-sm"
-                            defaultValue={appSettings["phone"]}
-                            onChange={(event) => setAppSettings({...appSettings, "phone": event.target.value})}
-                        />
-                    </div>
                 </Col>
                 <Col>
                     <Switch
                         label="Phone Alerts"
-                        switched={appSettings["registration_notifications"]["call_alerts"]}
-                        onClick={() => handleSwitchClick(settingsHook, "registration_notifications", "call_alerts")}
+                        switched={appSettings["registration_notifications"]["call_alerts"] && appSettings["registration_notifications"]["enabled"]}
+                        disabled={!appSettings["registration_notifications"]["enabled"]}
+                        onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"registration_notifications", "call_alerts")}
                     />
-                    <div className="d-xl-flex" style={{width: "80%"}}>
-                        <Form.Control
-                            type="tel"
-                            defaultValue={appSettings["phone"]}
-                            placeholder="Your Phone Number"
-                            className="form-control-sm"
-                            onChange={(event) => setAppSettings({...appSettings, "phone": event.target.value})}
-                        />
-                    </div>
                 </Col>
             </Row>
             <Row className="g-0 p-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
@@ -197,63 +212,39 @@ function NotificationSettings({settingsHook}) {
                         label="Watchdog Notifications"
                         description="In case your device looses internet, or shuts down, or the Turbo Terrier application simply crashes, when toggled on the watchdog monitoring system will alert you immediately so you can take appropriate action."
                         switched={appSettings["watchdog_notifications"]["enabled"]}
-                        onClick={() => handleSwitchClick(settingsHook, "watchdog_notifications", "enabled")}
+                        onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"watchdog_notifications", "enabled")}
                     />
                 </Col>
                 <Col>
                     <Switch
                         label="Email Alerts"
-                        switched={appSettings["watchdog_notifications"]["email_alerts"]}
-                        onClick={() => handleSwitchClick(settingsHook, "watchdog_notifications", "email_alerts")}
+                        switched={appSettings["watchdog_notifications"]["email_alerts"] && appSettings["watchdog_notifications"]["enabled"]}
+                        disabled={!appSettings["watchdog_notifications"]["enabled"]}
+                        onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"watchdog_notifications", "email_alerts")}
                     />
-                    <div className="d-xl-flex" style={{width: "80%"}}>
-                        <Form.Control
-                            type="email"
-                            defaultValue={appSettings["email"]}
-                            placeholder="Your Email"
-                            className="form-control-sm"
-                            onChange={(event) => setAppSettings({...appSettings, "email": event.target.value})}
-                        />
-                    </div>
                 </Col>
                 <Col>
                     <Switch
                         label="Text Alerts"
-                        switched={appSettings["watchdog_notifications"]["text_alerts"]}
-                        onClick={() => handleSwitchClick(settingsHook, "watchdog_notifications", "text_alerts")}
+                        switched={appSettings["watchdog_notifications"]["text_alerts"] && appSettings["watchdog_notifications"]["enabled"]}
+                        disabled={!appSettings["watchdog_notifications"]["enabled"]}
+                        onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"watchdog_notifications", "text_alerts")}
                     />
-                    <div className="d-xl-flex" style={{width: "80%"}}>
-                        <Form.Control
-                            type="tel"
-                            defaultValue={appSettings["phone"]}
-                            placeholder="Your Phone Number"
-                            className="form-control-sm"
-                            onChange={(event) => setAppSettings({...appSettings, "phone": event.target.value})}
-                        />
-                    </div>
                 </Col>
                 <Col>
                     <Switch
                         label="Phone Alerts"
-                        switched={appSettings["watchdog_notifications"]["call_alerts"]}
-                        onClick={() => handleSwitchClick(settingsHook, "watchdog_notifications", "call_alerts")}
+                        switched={appSettings["watchdog_notifications"]["call_alerts"] && appSettings["watchdog_notifications"]["enabled"]}
+                        disabled={!appSettings["watchdog_notifications"]["enabled"]}
+                        onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"watchdog_notifications", "call_alerts")}
                     />
-                    <div className="d-xl-flex" style={{width: "80%"}}>
-                        <Form.Control
-                            type="tel"
-                            defaultValue={appSettings["phone"]}
-                            placeholder="Your Phone Number"
-                            className="form-control-sm"
-                            onChange={(event) => setAppSettings({...appSettings, "phone": event.target.value})}
-                        />
-                    </div>
                 </Col>
             </Row>
         </>
     );
 }
 
-function RegistrationSettings({settingsHook}) {
+function RegistrationSettings({settingsHook, messageSaveToastHook}) {
     let [appSettings, setAppSettings] = settingsHook
     return (
         <Row className="g-0 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
@@ -262,15 +253,15 @@ function RegistrationSettings({settingsHook}) {
                     label="Real Registration"
                     description="When toggled off, registers to the course planner for testing purposes. When toggled on, performs real registerations on your target courses."
                     switched={appSettings["real_registrations"]}
-                    onClick={() => handleSwitchClick(settingsHook, "real_registrations")}
+                    onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"real_registrations")}
                 />
             </Col>
             <Col>
                 <Switch
-                    label="Never Give Up"
+                    label="Keep Trying"
                     description="When toggled off, if the application encounters too many successive errors, it will give up and shut off. When toggled on, the application will keep trying to register to the course until it succeeds discarding all errors."
                     switched={appSettings["keep_trying"]}
-                    onClick={() => handleSwitchClick(settingsHook, "keep_trying")}
+                    onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"keep_trying")}
                 />
             </Col>
             <Col>
@@ -278,7 +269,7 @@ function RegistrationSettings({settingsHook}) {
                     label="Save Password"
                     description="When toggled off, you will be required to enter your password anytime you start the app. When toggled on, the password will be encrypted and securely stored on your device for conveniance. Either way, your passwords never leave your computer except to log into BU."
                     switched={appSettings["save_password"]}
-                    onClick={() => handleSwitchClick(settingsHook, "save_password")}
+                    onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"save_password")}
                 />
             </Col>
             <Col>
@@ -286,14 +277,14 @@ function RegistrationSettings({settingsHook}) {
                     label="Save Duo Cookies"
                     description="When toggled off, you will be required to do your Duo authentication on every restart. When toggled on, Duo authentication cookies will be encrypted and securely stored on your device for conveniance. Either way, these cookies never leave your computer except to log into BU."
                     switched={appSettings["save_duo_cookies"]}
-                    onClick={() => handleSwitchClick(settingsHook, "save_duo_cookies")}
+                    onClick={() => handleSwitchClick(settingsHook, messageSaveToastHook,"save_duo_cookies")}
                 />
             </Col>
         </Row>
     );
 }
 
-function CourseSelectionForum({settingsHook}) {
+function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
     let [appSettings, setAppSettings] = settingsHook
 
     const deleteHandler = (course) => {
@@ -387,13 +378,58 @@ function AddedCourse({courseName, deleteHandler}) {
     );
 }
 
-function handleSwitchClick(settingsHook, ...keys) {
+
+let timerId = null
+let queued_updates = {}
+// update settings using a delay (to prevent too many requests from being sent to the backend)
+function updateSetting(messageSaveToastHook, settingKey, newValue) {
+    timerId && clearTimeout(timerId)
+    let [messageSaveToast, setMessageSaveToast] = messageSaveToastHook
+    queued_updates[settingKey] = newValue
+    timerId = setTimeout(() => {
+        let endpoint = "http://localhost:8080/api/web/v1/user-app-settings"
+        let userOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Authorization": Cookies.get("jwt-token")
+            },
+            body: JSON.stringify(queued_updates)
+        }
+        fetch(endpoint, userOptions)
+            .then(() => {
+                queued_updates = {}
+                setMessageSaveToast({
+                    show: true,
+                    status: ToastStatus.SUCCESS
+                })
+            }).catch(() => {
+                setMessageSaveToast({
+                    show: true,
+                    status: ToastStatus.ERROR
+                })
+            })
+
+    }, 1500)
+}
+
+function handleSwitchClick(settingsHook, messageSaveToastHook, ...keys) {
     let [appSettings, setAppSettings] = settingsHook
     if (keys.length === 1) {
         setAppSettings({...appSettings, [keys[0]]: !appSettings[keys[0]]})
+        updateSetting(messageSaveToastHook, keys[0], !appSettings[keys[0]])
     } else if (keys.length === 2) {
         setAppSettings({...appSettings, [keys[0]]: {...appSettings[keys[0]], [keys[1]]: !appSettings[keys[0]][keys[1]]}})
+        updateSetting(messageSaveToastHook, keys[0], {...appSettings[keys[0]], [keys[1]]: !appSettings[keys[0]][keys[1]]})
     }
+}
+
+function handleInputBoxUpdate(settingsHook, messageSaveToastHook, key, value) {
+    let [appSettings, setAppSettings] = settingsHook
+    setAppSettings({...appSettings, [key]: value})
+    updateSetting(messageSaveToastHook, key, value)
 }
 
 export default AppConfigurator

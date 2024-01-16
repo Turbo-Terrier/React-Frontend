@@ -1,0 +1,13 @@
+.header-success {
+    background-color: var(--bs-success);
+    border-bottom: none
+}
+
+.header-danger {
+    background-color: var(--bs-danger);
+    border-bottom: none
+}
+
+.toast-body {
+    opacity: 80%;
+}
