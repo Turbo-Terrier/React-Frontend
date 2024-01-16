@@ -32,7 +32,7 @@ function TOS() {
                                     <br/>
                                     Attempting to gain unauthorized access to any part of our website or application is
                                     strictly forbidden. Unauthorized access includes but is not limited to attempting to
-                                    access accounts, data, or features for which you do not have explicit permission.
+                                    access accounts, data, or features for which you do not have access to.
 
                                     <br/><br/><br/>
 

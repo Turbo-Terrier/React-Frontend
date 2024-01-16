@@ -1,8 +1,9 @@
 import Form from "react-bootstrap/Form";
 import {OverlayTrigger, Popover} from "react-bootstrap";
 import React from "react";
+import "../css/form-label.css"
 
-function Switch({id, label, description}) {
+function Switch({label, description, switched, onClick}) {
     const popover = (
         <Popover id="popover-basic">
             <Popover.Header as="h3">❓ What is this?</Popover.Header>
@@ -13,8 +14,8 @@ function Switch({id, label, description}) {
     )
 
     return (
-        <Form.Check type="switch" id={"formCheck-" + id}>
-            <Form.Check.Input type="checkbox" className="form-check-input" />
+        <Form.Check type="switch">
+            <Form.Check.Input type="checkbox" className="form-check-input" checked={switched} onChange={onClick}/>
             <Form.Check.Label className="form-check-label">
                 {label}&nbsp;&nbsp;
                 {description && (

@@ -1,0 +1,20 @@
+.delete-icon {
+    font-size: 24px;
+    color: var(--bs-form-invalid-color);
+}
+
+.delete-icon:hover {
+    cursor: pointer;
+    color: var(--bs-code-color)
+}
+
+.delete-icon:focus {
+    cursor: pointer;
+    color: var(--bs-code-color)
+}
+
+.target-course {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
