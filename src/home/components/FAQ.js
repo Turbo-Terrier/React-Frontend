@@ -21,16 +21,16 @@ function Faq() {
                                             <b>Turbo Terrier:</b>
                                             <ul>
                                                 <li>Runs on your device</li>
-                                                <li>More complicated setup process</li>
                                                 <li>Registers you for the course with in seconds of it opening</li>
+                                                <li>Lets you add courses that haven't yet been added to the student link</li>
                                                 <li>Slightly more expensive</li>
                                                 <li>Definitely cooler website</li>
                                             </ul>
                                             <b>BU Ninja:</b>
                                             <ul>
                                                 <li>Runs in the cloud</li>
-                                                <li>Relatively simple setup</li>
                                                 <li>Only alerts you about a course opening (with significant delay)</li>
+                                                <li>Only allows you to add courses that are currently on the student link</li>
                                                 <li>Slightly cheaper</li>
                                                 <li>Less cooler website</li>
                                             </ul>

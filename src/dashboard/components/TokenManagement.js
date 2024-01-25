@@ -23,7 +23,7 @@ function TokenManagement({loggedInUser, setLoggedInUser}) {
         }, 1200)
     }
 
-    async function resetToken() {
+    function resetToken() {
         let endpoint = "http://localhost:8080/api/web/v1/reset-app-token"
         let userOptions = {
             method: "GET",
@@ -33,19 +33,29 @@ function TokenManagement({loggedInUser, setLoggedInUser}) {
                 "Authorization": Cookies.get("jwt-token")
             }
         }
-        let result = await fetch(endpoint, userOptions)
-        if (result.ok) {
-            //todo disable button while this runs
-            let json_resp = await result.json()
-            const expirationDate = new Date();
-            expirationDate.setDate(expirationDate.getDate() + 30);
-            Cookies.set("jwt-token", json_resp.jwt_cookie, { expires: expirationDate, path: '/' })
-            setLoggedInUser(json_resp.user)
-            setShowTooltip2(true)
-            setTimeout(() => {
-                setShowTooltip2(false)
-            }, 1200)
-        }
+        fetch(endpoint, userOptions)
+            .then(resp => {
+                if (resp.ok) {
+                    return resp.json()
+                } else {
+                    return null;
+                }
+            }).then(data => {
+            if (data === null) {
+
+            } else {
+                const expirationDate = new Date();
+                expirationDate.setDate(expirationDate.getDate() + 30);
+                Cookies.set("jwt-token", data.jwt_cookie, {expires: expirationDate, path: '/'})
+                setLoggedInUser(data.user)
+                setShowTooltip2(true)
+                setTimeout(() => {
+                    setShowTooltip2(false)
+                }, 1200)
+            }
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     return (

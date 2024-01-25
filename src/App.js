@@ -26,13 +26,23 @@ function App() {
 
     useEffect(() => {
         async function checkLoggedInStatus() {
-            const result = await isLoggedIn();
-            if (result.ok) {
-                let json_resp = await result.json()
-                setLoggedInUser(json_resp)
-            } else {
-                setLoggedInUser(null);
-            }
+            await fetchProfileInfo()
+                .then(resp => {
+                    if (resp.ok) {
+                        return resp.json()
+                    } else {
+                        return null;
+                    }
+                }).then(data => {
+                    if (data === null) {
+                        setLoggedInUser(null)
+                    } else {
+                        setLoggedInUser(data)
+                    }
+                }).catch(err => {
+                    console.log(err)
+                    setLoggedInUser(null)
+                })
         }
         async function doRegisteration() {
             const result = await register(authCode)
@@ -97,7 +107,7 @@ async function register(userAuth) {
     return result;
 }
 
-async function isLoggedIn() {
+async function fetchProfileInfo() {
     let access_token = Cookies.get("jwt-token");
 
     if (!access_token) {
@@ -113,9 +123,7 @@ async function isLoggedIn() {
             Authorization: access_token,
         },
     };
-    let result = await fetch(queryUrl, userOptions);
-
-    return result;
+    return await fetch(queryUrl, userOptions);
 }
 
 export default App;

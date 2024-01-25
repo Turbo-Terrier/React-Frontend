@@ -10,6 +10,9 @@ import Cookies from "js-cookie";
 import app from "../../App";
 import ClarificationPopover from "../../components/ClarificationPopover";
 import {StatusToast, ToastStatus} from "../../components/StatusToast";
+import Autosuggest from "react-autosuggest";
+import SearchableInput from "../../components/SearchableInput";
+import {BuCourse, BuCourseSection} from "../../data/BuCourse";
 
 
 
@@ -136,7 +139,7 @@ function NotificationSettings({settingsHook, messageSaveToastHook}) {
                             value={appSettings["email"]}
                             placeholder="Your Email"
                             className="form-control-sm form-text-input"
-                            onChange={(event) => handleInputBoxUpdate(settingsHook, "email", event.target.value)}
+                            onChange={(event) => handleInputBoxUpdate(settingsHook, messageSaveToastHook,"email", event.target.value)}
                         />
                     </div>
                 </Col>
@@ -287,6 +290,10 @@ function RegistrationSettings({settingsHook, messageSaveToastHook}) {
 function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
     let [appSettings, setAppSettings] = settingsHook
 
+    let [courseSuggestions, setCourseSuggestions] = useState([])
+    let courseSuggestionsHook = [courseSuggestions, setCourseSuggestions]
+    let [selectedCourse, setSelectedCourse] = useState(null)
+
     const deleteHandler = (course) => {
         // todo
     }
@@ -318,31 +325,28 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
                 <Col md className="m-2">
                     <Form.Group className="mb-3">
                         <Form.Label className="form-label fw-semibold d-md-flex justify-content-md-center">Semester</Form.Label>
-                        <Form.Select>
-                            <optgroup label="This is a group">
-                                <option value="12">This is item 1</option>
-                                <option value="13">This is item 2</option>
-                                <option value="14">This is item 3</option>
-                            </optgroup>
+                        <Form.Select defaultValue="0" required>
+                            <option value="0" disabled>Select the target semester</option>
+                            <option value="1">Spring 2024</option>
+                            <option value="2">Summer I 2024</option>
+                            <option value="3">Summer II 2024</option>
                         </Form.Select>
                     </Form.Group>
                 </Col>
                 <Col md className="m-2">
                     <Form.Group className="mb-3">
                         <Form.Label className="form-label fw-semibold d-md-flex justify-content-md-center">Course</Form.Label>
-                        <Form.Select>
-                            <optgroup label="This is a group">
-                                <option value="12">This is item 1</option>
-                                <option value="13">This is item 2</option>
-                                <option value="14">This is item 3</option>
-                            </optgroup>
-                        </Form.Select>
+                        <SearchableInput courseSuggestionsHook={courseSuggestionsHook}/>
                     </Form.Group>
                 </Col>
             </Row>
             <Row className="g-0">
                 <Col className="d-flex d-md-flex justify-content-center justify-content-md-center">
-                    <Button variant="danger" className="border rounded border-1" type="button" style={{ width: '25%' }}>
+                    <Button variant="danger"
+                            className="border rounded border-1"
+                            type="button"
+                            onClick={() => addCourse()}
+                            style={{ width: '25%' }}>
                         Add
                     </Button>
                 </Col>
@@ -351,7 +355,9 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
     )
 }
 
-
+function addCourse() {
+    //todo
+}
 
 function AddedCourse({courseName, deleteHandler}) {
 
@@ -379,14 +385,14 @@ function AddedCourse({courseName, deleteHandler}) {
 }
 
 
-let timerId = null
+let timerId1 = null //todo finish
 let queued_updates = {}
 // update settings using a delay (to prevent too many requests from being sent to the backend)
 function updateSetting(messageSaveToastHook, settingKey, newValue) {
-    timerId && clearTimeout(timerId)
+    timerId1 && clearTimeout(timerId1)
     let [messageSaveToast, setMessageSaveToast] = messageSaveToastHook
     queued_updates[settingKey] = newValue
-    timerId = setTimeout(() => {
+    timerId1 = setTimeout(() => {
         let endpoint = "http://localhost:8080/api/web/v1/user-app-settings"
         let userOptions = {
             method: "POST",
@@ -403,11 +409,13 @@ function updateSetting(messageSaveToastHook, settingKey, newValue) {
                 queued_updates = {}
                 setMessageSaveToast({
                     show: true,
+                    message: "Your changes have been saved!",
                     status: ToastStatus.SUCCESS
                 })
             }).catch(() => {
                 setMessageSaveToast({
                     show: true,
+                    message: "Error, we were unable to save your changes!",
                     status: ToastStatus.ERROR
                 })
             })
