@@ -8,8 +8,8 @@ import {Col, Row} from "react-bootstrap";
 
 
 
-const SearchableInput = ({courseSuggestionsHook, selectedCourseHook, selectedSemesterHook, courseListHook}) => {
-    const [value, setValue] = useState('');
+const SearchableInput = ({rawCourseValueHook, courseSuggestionsHook, selectedCourseHook, selectedSemesterHook, courseListHook}) => {
+    const [rawCourseValue, setRawCourseValue] = rawCourseValueHook;
     const [courseSuggestions, setCourseSuggestions] = courseSuggestionsHook;
     const [courseList, setCourseList] = courseListHook;
     const [selectedCourse, setSelectedCourse] = selectedCourseHook;
@@ -38,7 +38,7 @@ const SearchableInput = ({courseSuggestionsHook, selectedCourseHook, selectedSem
 
     const onSuggestionsFetchRequested = ({ value, reason }) => {
         if (reason !== "suggestion-selected") {
-            setCourseSuggestions(getCourseSuggestions(courseList, value));
+            setCourseSuggestions(getCourseSuggestions(courseList, value, false));
         }
         setSelectedCourse(value)
     };
@@ -48,12 +48,12 @@ const SearchableInput = ({courseSuggestionsHook, selectedCourseHook, selectedSem
     };
 
     const onChange = (_, { newValue }) => {
-        setValue(newValue);
+        setRawCourseValue(newValue);
     };
 
     const inputProps = {
-        placeholder: 'Course Name & Section (i.e. CAS CS 111 A1)',
-        value,
+        placeholder: 'Example: CAS CS 111 A1',
+        value: rawCourseValue,
         onChange,
     };
 
@@ -69,58 +69,56 @@ const SearchableInput = ({courseSuggestionsHook, selectedCourseHook, selectedSem
     );
 
     return (
-        <Form>
-            <Autosuggest
-                suggestions={courseSuggestions}
-                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                alwaysRenderSuggestions={true}
-                onSuggestionSelected={onSuggestionSelected}
-                getSuggestionValue={(suggestion) =>
-                    suggestion.course.college +
-                    ' ' +
-                    suggestion.course.department +
-                    ' ' +
-                    suggestion.course.course_code +
-                    ' ' +
-                    suggestion.section.section
-                }
-                renderSuggestion={(suggestion) => {
-                    return renderSuggestion(suggestion)
-                }}
-                renderInputComponent={(inputProps) => (
-                    <Form.Control
-                        {...inputProps}
-                        type="text"
-                        className="autosuggest-input"
-                        disabled={selectedSemester === null}
-                    />
-                )}
-                inputProps={inputProps}
-                renderSuggestionsContainer={({ containerProps, children, query }) => (
-                    <div {...containerProps} className={"autosuggest-suggestions-container"}>
-                        {children}
-                    </div>
-                )}
-                multiSection={true}
-                renderSectionTitle={(suggestion) => {
-                    let courseTitle = suggestion.courses[0].course.title
-                    return <strong>
-                        {
-                            suggestion.courseName + " - " + courseTitle
-                        }
-                    </strong>
-                }}
-                getSectionSuggestions={(suggestion) => {
-                    return suggestion.courses
-                }}
-                scrollBar={true}
-            />
-
-        </Form>
+        <Autosuggest
+            suggestions={courseSuggestions}
+            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+            alwaysRenderSuggestions={true}
+            onSuggestionSelected={onSuggestionSelected}
+            getSuggestionValue={(suggestion) =>
+                suggestion.course.college +
+                ' ' +
+                suggestion.course.department +
+                ' ' +
+                suggestion.course.course_code +
+                ' ' +
+                suggestion.section.section
+            }
+            renderSuggestion={(suggestion) => {
+                return renderSuggestion(suggestion)
+            }}
+            renderInputComponent={(inputProps) => (
+                <Form.Control
+                    {...inputProps}
+                    type="text"
+                    className="autosuggest-input"
+                    value={selectedCourse || ""}
+                    disabled={selectedSemester === null}
+                />
+            )}
+            inputProps={inputProps}
+            renderSuggestionsContainer={({ containerProps, children, query }) => (
+                <div {...containerProps} className={"autosuggest-suggestions-container"}>
+                    {children}
+                </div>
+            )}
+            multiSection={true}
+            renderSectionTitle={(suggestion) => {
+                let courseTitle = suggestion.courses[0].course.title
+                return <strong>
+                    {
+                        suggestion.courseName + " - " + courseTitle
+                    }
+                </strong>
+            }}
+            getSectionSuggestions={(suggestion) => {
+                return suggestion.courses
+            }}
+            scrollBar={true}
+        />
     );
 };
 
-function getCourseSuggestions(courseList, inputValue, exactMatch = false) {
+function getCourseSuggestions(courseList, inputValue, exactMatch) {
     inputValue = inputValue.toLowerCase().trim();
     let searchedCourse = inputValue.split(" ").splice(0, 3).join(" ").toString().trim()
 

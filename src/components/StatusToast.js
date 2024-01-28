@@ -24,7 +24,7 @@ const StatusToast = ({messageSaveToastHook}) => {
         >
             <Toast onClose={() => setMessageSaveToast({
                 show: false,
-                message: "null",
+                message: messageSaveToast.message,
                 status: messageSaveToast.status
             })} show={messageSaveToast.show} delay={3000} autohide={true} animation={true}>
                 <Toast.Header className={'header-' + messageSaveToast.status.className + ' text-white'} closeButton={true}>
