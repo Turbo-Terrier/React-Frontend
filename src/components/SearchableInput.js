@@ -4,13 +4,15 @@ import Autosuggest from "react-autosuggest";
 import "../css/searchable-input.css";
 import Cookies from "js-cookie";
 import {BuCourseSection} from "../data/BuCourse";
+import {Col, Row} from "react-bootstrap";
 
 
 
-const SearchableInput = ({courseSuggestionsHook}) => {
+const SearchableInput = ({courseSuggestionsHook, selectedCourseHook}) => {
     const [value, setValue] = useState('');
     const [courseSuggestions, setCourseSuggestions] = courseSuggestionsHook;
     const [courseList, setCourseList] = useState([]);
+    const [selectedCourse, setSelectedCourse] = selectedCourseHook;
 
     useEffect(() => {
         getAllCourses("2021F").then(resp => {
@@ -23,7 +25,7 @@ const SearchableInput = ({courseSuggestionsHook}) => {
             if (data === null) {
                 setCourseList(null)
             } else {
-                setCourseList(BuCourseSection.fromJsonArray(data))
+                setCourseList(BuCourseSection.specialJson(data))
             }
         });
     }, []);
@@ -31,28 +33,37 @@ const SearchableInput = ({courseSuggestionsHook}) => {
 
     const updateCourseSuggestions = (inputValue) => {
         inputValue = inputValue.toLowerCase().trim();
+        let searchedCourse = inputValue.split(" ").splice(0, 3).join(" ").toString().trim()
 
-        const filteredSuggestions = courseList.filter(
+        let filteredSuggestions = courseList.filter(
             (course) => {
-                return (course.course.college + ' ' + course.course.department + ' ' + course.course.course_code + ' ' + course.section.section)
+                return (course.courseName)
                     .toLowerCase()
-                    .includes(inputValue.toLowerCase())
+                    .includes(searchedCourse)
             }
-        ).slice(0, 20);
+        ).slice(0, 30);
+
+        let splitInput = inputValue.split(" ")
+        if (splitInput.length === 4 && filteredSuggestions.length === 1) {
+            filteredSuggestions = [{courseName: filteredSuggestions[0].courseName, courses: filteredSuggestions[0].courses.filter(
+                    course => {
+                        return course.section.section.toLowerCase().startsWith(splitInput[3])
+                    }
+                )}]
+        }
+
         setCourseSuggestions(filteredSuggestions);
     };
 
-    const onSuggestionsFetchRequested = ({ value }) => {
-        updateCourseSuggestions(value);
-    };
-
-    const onSuggestionsClearRequested = () => {
-        setCourseSuggestions([]);
+    const onSuggestionsFetchRequested = ({ value, reason }) => {
+        if (reason !== "suggestion-selected") {
+            updateCourseSuggestions(value);
+        }
+        setSelectedCourse(value)
     };
 
     const onSuggestionSelected = (_, { suggestionValue }) => {
-        // Handle the selection of a suggestion, e.g., update state or perform an action
-        console.log(`Selected suggestion: ${suggestionValue}`);
+        setCourseSuggestions([]);
     };
 
     const onChange = (_, { newValue }) => {
@@ -67,7 +78,12 @@ const SearchableInput = ({courseSuggestionsHook}) => {
 
     const renderSuggestion = (suggestion) => (
         <>
-            {suggestion.course.college} {suggestion.course.department} {suggestion.course.course_code} {suggestion.section.section}
+            <h6>{suggestion.course.college + ' ' + suggestion.course.department + ' ' + suggestion.course.course_code + ' ' + suggestion.section.section}</h6>
+            <Row style={{fontSize: '12px'}}>
+                <Col className={""}>{suggestion.section.instructor}</Col>
+                <Col>{suggestion.section.location}</Col>
+                <Col>{suggestion.section.schedule}</Col>
+            </Row>
         </>
     );
 
@@ -76,7 +92,7 @@ const SearchableInput = ({courseSuggestionsHook}) => {
             <Autosuggest
                 suggestions={courseSuggestions}
                 onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={onSuggestionsClearRequested}
+                alwaysRenderSuggestions={true}
                 onSuggestionSelected={onSuggestionSelected}
                 getSuggestionValue={(suggestion) =>
                     suggestion.course.college +
@@ -87,7 +103,9 @@ const SearchableInput = ({courseSuggestionsHook}) => {
                     ' ' +
                     suggestion.section.section
                 }
-                renderSuggestion={(suggestion) => renderSuggestion(suggestion)}
+                renderSuggestion={(suggestion) => {
+                    return renderSuggestion(suggestion)
+                }}
                 renderInputComponent={(inputProps) => (
                     <Form.Control
                         {...inputProps}
@@ -101,12 +119,17 @@ const SearchableInput = ({courseSuggestionsHook}) => {
                         {children}
                     </div>
                 )}
-                multiSection={false}
+                multiSection={true}
                 renderSectionTitle={(suggestion) => {
-                    return <strong>{suggestion.course.college + " " + suggestion.course.department + " " + suggestion.course.course_code}</strong>
+                    let courseTitle = suggestion.courses[0].course.title
+                    return <strong>
+                        {
+                            suggestion.courseName + " - " + courseTitle
+                        }
+                    </strong>
                 }}
                 getSectionSuggestions={(suggestion) => {
-                    return suggestion.section.section
+                    return suggestion.courses
                 }}
                 scrollBar={true}
             />

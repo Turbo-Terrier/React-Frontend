@@ -293,9 +293,15 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
     let [courseSuggestions, setCourseSuggestions] = useState([])
     let courseSuggestionsHook = [courseSuggestions, setCourseSuggestions]
     let [selectedCourse, setSelectedCourse] = useState(null)
+    let selectedCourseHook = [selectedCourse, setSelectedCourse]
 
     const deleteHandler = (course) => {
         // todo
+    }
+
+    // todo
+    function addCourse() {
+        console.log("Adding course: " + selectedCourse)
     }
 
     return (
@@ -336,7 +342,7 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
                 <Col md className="m-2">
                     <Form.Group className="mb-3">
                         <Form.Label className="form-label fw-semibold d-md-flex justify-content-md-center">Course</Form.Label>
-                        <SearchableInput courseSuggestionsHook={courseSuggestionsHook}/>
+                        <SearchableInput courseSuggestionsHook={courseSuggestionsHook} selectedCourseHook={selectedCourseHook}/>
                     </Form.Group>
                 </Col>
             </Row>
@@ -353,10 +359,6 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
             </Row>
         </Form>
     )
-}
-
-function addCourse() {
-    //todo
 }
 
 function AddedCourse({courseName, deleteHandler}) {

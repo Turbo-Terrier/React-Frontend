@@ -43,12 +43,19 @@ class BuCourseSection extends JsonSerializable {
         for (let i = 0; i < originalData.length; i++) {
             let courseName = originalData[i].course.college + " " + originalData[i].course.department + " " + originalData[i].course.course_code
             if (courseName in courseDict) {
-                courseDict[courseName].push(originalData[i].section.section)
+                courseDict[courseName].push(originalData[i])
             } else {
-                courseDict[courseName] = [originalData[i].section.section]
+                courseDict[courseName] = [originalData[i]]
             }
         }
-        return courseDict
+        let convertedData = []
+        for (let courseName in courseDict) {
+            convertedData.push({
+                courseName: courseName,
+                courses: courseDict[courseName],
+            })
+        }
+        return convertedData
     }
 }
 
