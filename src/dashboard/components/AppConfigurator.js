@@ -11,7 +11,7 @@ import app from "../../App";
 import ClarificationPopover from "../../components/ClarificationPopover";
 import {StatusToast, ToastStatus} from "../../components/StatusToast";
 import Autosuggest from "react-autosuggest";
-import SearchableInput from "../../components/SearchableInput";
+import {SearchableInput, getCourseSuggestions} from "../../components/SearchableInput";
 import {BuCourse, BuCourseSection} from "../../data/BuCourse";
 
 
@@ -289,11 +289,17 @@ function RegistrationSettings({settingsHook, messageSaveToastHook}) {
 
 function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
     let [appSettings, setAppSettings] = settingsHook
+    let [messageSaveToast, setMessageSaveToast] = messageSaveToastHook
 
     let [courseSuggestions, setCourseSuggestions] = useState([])
+    let [activeSemesters, setActiveSemesters] = useState([])
+    const [courseList, setCourseList] = useState([]);
+    let [selectedSemester, setSelectedSemester] = useState(null)
     let courseSuggestionsHook = [courseSuggestions, setCourseSuggestions]
     let [selectedCourse, setSelectedCourse] = useState(null)
     let selectedCourseHook = [selectedCourse, setSelectedCourse]
+    let selectedSemesterHook = [selectedSemester, setSelectedSemester];
+    let courseListHook = [courseList, setCourseList]
 
     const deleteHandler = (course) => {
         // todo
@@ -301,8 +307,89 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
 
     // todo
     function addCourse() {
-        console.log("Adding course: " + selectedCourse)
+        let selectedCourseObject = getCourseSuggestions(courseList, selectedCourse, true)
+        if (selectedCourseObject === 0) {
+            console.log("TODO")
+            return
+        } else {
+            selectedCourseObject = selectedCourseObject[0].courses[0]
+        }
+        console.log(selectedCourseObject)
+        const sendAddCourse = async () => {
+            let endpoint = "http://localhost:8080/api/web/v1/add-course"
+
+            let userOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "Authorization": Cookies.get("jwt-token")
+                },
+                body: JSON.stringify({
+                    course_id: selectedCourseObject.course.course_id,
+                    section_id: selectedCourseObject.section.section
+                })
+            }
+            return await fetch(endpoint, userOptions)
+        }
+        sendAddCourse()
+            .then(response => {
+                if (response.ok) {
+                    setAppSettings({...appSettings, target_courses: [...appSettings.target_courses, selectedCourseObject]})
+                    setSelectedCourse(null)
+                    setSelectedSemester(null)
+                    setMessageSaveToast({
+                        show: true,
+                        message: "Your changes have been saved!",
+                        status: ToastStatus.SUCCESS
+                    })
+                } else {
+                    setMessageSaveToast({
+                        show: true,
+                        message: "Error, we were unable to save your changes!",
+                        status: ToastStatus.ERROR
+                    })
+                }
+            })
+            .catch(error => console.log(error))
     }
+
+    function updateSelectedSemester(event) {
+        if (event.target.value === '0') {
+            return
+        }
+        let parts = event.target.value.split(" ")
+        let semesterSeason = parts[0]
+        let semesterYear = parseInt(parts[1])
+        setSelectedSemester({
+            semester_season: semesterSeason,
+            semester_year: semesterYear
+        })
+        setSelectedCourse(null)
+    }
+
+    async function fetchActiveSemesters(){
+        let endpoint = "http://localhost:8080/api/web/v1/active-semesters"
+        let userOptions = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Authorization": Cookies.get("jwt-token")
+            },
+        }
+        return await fetch(endpoint, userOptions)
+    }
+
+    useEffect(() => {
+        fetchActiveSemesters()
+            .then(response => response.json())
+            .then(data => {
+                setActiveSemesters(data)
+            })
+            .catch(error => console.log(error))
+    }, [])
 
     return (
         <Form>
@@ -316,8 +403,8 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
                     <Row className="g-0 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 text-center text-bg-light m-2"
                          style={{borderStyle: 'inset'}}>
                         {/* Replace the hardcoded courses with your actual courses */}
-                        {appSettings.target_courses.map((course) => {
-                            return <AddedCourse courseName={course} deleteHandler={() => deleteHandler(course)}/>
+                        {appSettings.target_courses.map((courseInfo) => {
+                            return <AddedCourse courseInfo={courseInfo} deleteHandler={() => deleteHandler(courseInfo)}/>
                         })}
                     </Row>
                 </>
@@ -331,18 +418,18 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
                 <Col md className="m-2">
                     <Form.Group className="mb-3">
                         <Form.Label className="form-label fw-semibold d-md-flex justify-content-md-center">Semester</Form.Label>
-                        <Form.Select defaultValue="0" required>
+                        <Form.Select defaultValue="0" required onClick={updateSelectedSemester}>
                             <option value="0" disabled>Select the target semester</option>
-                            <option value="1">Spring 2024</option>
-                            <option value="2">Summer I 2024</option>
-                            <option value="3">Summer II 2024</option>
+                            {activeSemesters.map((semester) => {
+                                return <option>{semester.semester_season + " " + semester.semester_year}</option>
+                            })}
                         </Form.Select>
                     </Form.Group>
                 </Col>
                 <Col md className="m-2">
                     <Form.Group className="mb-3">
                         <Form.Label className="form-label fw-semibold d-md-flex justify-content-md-center">Course</Form.Label>
-                        <SearchableInput courseSuggestionsHook={courseSuggestionsHook} selectedCourseHook={selectedCourseHook}/>
+                        <SearchableInput courseSuggestionsHook={courseSuggestionsHook} selectedCourseHook={selectedCourseHook} selectedSemesterHook={selectedSemesterHook} courseListHook={courseListHook}/>
                     </Form.Group>
                 </Col>
             </Row>
@@ -361,12 +448,11 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
     )
 }
 
-function AddedCourse({courseName, deleteHandler}) {
-
+function AddedCourse({courseInfo, deleteHandler}) {
     return (
         <Col>
             <p className="target-course">
-                {courseName}
+                {courseInfo.course.college + " " + courseInfo.course.department + " " + courseInfo.course.course_code + " " + courseInfo.section.section}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="1em"

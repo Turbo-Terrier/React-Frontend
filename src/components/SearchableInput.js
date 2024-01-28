@@ -8,14 +8,20 @@ import {Col, Row} from "react-bootstrap";
 
 
 
-const SearchableInput = ({courseSuggestionsHook, selectedCourseHook}) => {
+const SearchableInput = ({courseSuggestionsHook, selectedCourseHook, selectedSemesterHook, courseListHook}) => {
     const [value, setValue] = useState('');
     const [courseSuggestions, setCourseSuggestions] = courseSuggestionsHook;
-    const [courseList, setCourseList] = useState([]);
+    const [courseList, setCourseList] = courseListHook;
     const [selectedCourse, setSelectedCourse] = selectedCourseHook;
+    const [selectedSemester, setSelectedSemester] = selectedSemesterHook;
 
     useEffect(() => {
-        getAllCourses("2021F").then(resp => {
+        if (selectedSemester === null) {
+            return
+        }
+        setCourseList([])
+        setCourseSuggestions([])
+        getAllCourses(selectedSemester).then(resp => {
             if (resp.ok) {
                 return resp.json()
             } else {
@@ -28,36 +34,11 @@ const SearchableInput = ({courseSuggestionsHook, selectedCourseHook}) => {
                 setCourseList(BuCourseSection.specialJson(data))
             }
         });
-    }, []);
-
-
-    const updateCourseSuggestions = (inputValue) => {
-        inputValue = inputValue.toLowerCase().trim();
-        let searchedCourse = inputValue.split(" ").splice(0, 3).join(" ").toString().trim()
-
-        let filteredSuggestions = courseList.filter(
-            (course) => {
-                return (course.courseName)
-                    .toLowerCase()
-                    .includes(searchedCourse)
-            }
-        ).slice(0, 30);
-
-        let splitInput = inputValue.split(" ")
-        if (splitInput.length === 4 && filteredSuggestions.length === 1) {
-            filteredSuggestions = [{courseName: filteredSuggestions[0].courseName, courses: filteredSuggestions[0].courses.filter(
-                    course => {
-                        return course.section.section.toLowerCase().startsWith(splitInput[3])
-                    }
-                )}]
-        }
-
-        setCourseSuggestions(filteredSuggestions);
-    };
+    }, [selectedSemester]);
 
     const onSuggestionsFetchRequested = ({ value, reason }) => {
         if (reason !== "suggestion-selected") {
-            updateCourseSuggestions(value);
+            setCourseSuggestions(getCourseSuggestions(courseList, value));
         }
         setSelectedCourse(value)
     };
@@ -111,6 +92,7 @@ const SearchableInput = ({courseSuggestionsHook, selectedCourseHook}) => {
                         {...inputProps}
                         type="text"
                         className="autosuggest-input"
+                        disabled={selectedSemester === null}
                     />
                 )}
                 inputProps={inputProps}
@@ -138,6 +120,39 @@ const SearchableInput = ({courseSuggestionsHook, selectedCourseHook}) => {
     );
 };
 
+function getCourseSuggestions(courseList, inputValue, exactMatch = false) {
+    inputValue = inputValue.toLowerCase().trim();
+    let searchedCourse = inputValue.split(" ").splice(0, 3).join(" ").toString().trim()
+
+    let filteredSuggestions = courseList.filter(
+        (course) => {
+            if (exactMatch) {
+                return searchedCourse.startsWith(course.courseName.toLowerCase())
+            } else {
+                return (course.courseName)
+                    .toLowerCase()
+                    .includes(searchedCourse)
+            }
+        }
+    );
+
+
+    let splitInput = inputValue.split(" ")
+    if (splitInput.length === 4 && filteredSuggestions.length === 1) {
+        filteredSuggestions = [{courseName: filteredSuggestions[0].courseName, courses: filteredSuggestions[0].courses.filter(
+                course => {
+                    if (exactMatch) {
+                        return course.section.section.toLowerCase() === splitInput[3]
+                    } else {
+                        return course.section.section.toLowerCase().startsWith(splitInput[3])
+                    }
+                }
+            )}]
+    }
+
+    return filteredSuggestions.slice(0, 30)
+};
+
 async function getAllCourses(semester) {
     let endpoint = "http://localhost:8080/api/web/v1/get-available-courses"
     let userOptions = {
@@ -149,7 +164,7 @@ async function getAllCourses(semester) {
             "Authorization": Cookies.get("jwt-token")
         },
     }
-    return await fetch(`${endpoint}?semester=${semester}`, userOptions)
+    return await fetch(`${endpoint}?semester_season=${semester.semester_season}&semester_year=${semester.semester_year}`, userOptions)
 }
 
-export default SearchableInput;
+export {SearchableInput, getCourseSuggestions};
