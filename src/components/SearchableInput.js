@@ -24,27 +24,22 @@ const SearchableInput = ({courseSuggestionsHook}) => {
                 setCourseList(null)
             } else {
                 setCourseList(BuCourseSection.fromJsonArray(data))
-                console.log(courseList)
             }
         });
     }, []);
 
-    let timerId = null //todo finish
+
     const updateCourseSuggestions = (inputValue) => {
-        timerId && clearTimeout(timerId)
         inputValue = inputValue.toLowerCase().trim();
 
-        timerId = setTimeout(() => {
-            const filteredSuggestions = courseList.filter(
-                (course) => {
-                    return (course.course.college + ' ' + course.course.department + ' ' + course.course.course_code + ' ' + course.section.section)
-                        .toLowerCase()
-                        .includes(inputValue.toLowerCase())
-                }
-            );
-
-            setCourseSuggestions(filteredSuggestions);
-        }, 250);
+        const filteredSuggestions = courseList.filter(
+            (course) => {
+                return (course.course.college + ' ' + course.course.department + ' ' + course.course.course_code + ' ' + course.section.section)
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase())
+            }
+        ).slice(0, 20);
+        setCourseSuggestions(filteredSuggestions);
     };
 
     const onSuggestionsFetchRequested = ({ value }) => {
