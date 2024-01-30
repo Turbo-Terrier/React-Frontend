@@ -1,6 +1,3 @@
-import Header from "./components/Header";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import {Col, Row, Image} from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import CatPic from './img/cat-pic.png'

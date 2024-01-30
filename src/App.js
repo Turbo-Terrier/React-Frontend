@@ -7,7 +7,7 @@ import Privacy from "./Privacy";
 import Refunds from "./Refunds";
 import {ErrorPage, ErrorType} from "./ErrorPage";
 import Header from "./components/Header";
-import Navbar from "./components/Navbar";
+import NavbarHeading from "./components/NavbarHeading";
 import Footer from "./components/Footer";
 import {useEffect, useState} from "react";
 import Cookies from "js-cookie";
@@ -69,7 +69,7 @@ function App() {
     return (
         <>
             <Header />
-            <Navbar loggedIn={loggedInUser != null} />
+            <NavbarHeading loggedInUser={loggedInUser} />
             <Routes path={"/"}>
                 <Route index element={<Home/>} />
                 <Route path={'/dashboard'} element={loggedInUser != null ? <Dashboard loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/> : <ErrorPage error_type={ErrorType.UNAUTHORIZED}/>} />

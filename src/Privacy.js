@@ -1,8 +1,5 @@
-import Header from "./components/Header";
 import {Col, Row} from "react-bootstrap";
-import Footer from "./components/Footer";
 import Container from "react-bootstrap/Container";
-import Navbar from "./components/Navbar";
 
 function Privacy() {
     return (
