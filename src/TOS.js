@@ -2,7 +2,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import {Col, Row} from "react-bootstrap";
 import Container from "react-bootstrap/Container";
-import Navbar from "./components/Navbar";
+import NavbarHeading from "./components/NavbarHeading";
 
 function TOS() {
     return (

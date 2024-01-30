@@ -63,7 +63,7 @@ function TokenManagement({loggedInUser, setLoggedInUser}) {
             <Row className="mb-2">
                 <Col md={8} xl={6} className="text-center mx-auto">
                     <h3 className="fw-bold">Application Token</h3>
-                    <p className="text-muted">This token is required to authenticate yourself in the Turbo Terrier Bot application. See the download and usage instructions below for details.</p>
+                    <p className="text-muted">This token is required to authenticate yourself in the Turbo Terrier Bot application. See the download and usage instructions above for details.</p>
                 </Col>
             </Row>
             <Row className="mb-2">

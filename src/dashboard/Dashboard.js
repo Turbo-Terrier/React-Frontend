@@ -11,8 +11,8 @@ function Dashboard({loggedInUser, setLoggedInUser}) {
 
     return (
         <>
-            <DownloadAndInstructions/>
             <AccessManagement loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
+            <DownloadAndInstructions/>
             <TokenManagement loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
             <AppMonitor loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
             <AppConfigurator/>

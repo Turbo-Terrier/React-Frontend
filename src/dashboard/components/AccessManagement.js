@@ -1,8 +1,53 @@
 import {Col, Row} from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import {Footnotes, PremiumPricing} from "../../home/components/Pricing";
+import {scroller} from "react-scroll";
+import {Link} from "react-router-dom";
 
 function AccessManagement({loggedInUser, setLoggedInUser}) {
+    const pricingUrl = (
+        <Link to="/" onClick={() => {
+            setTimeout(() => {
+                scroller.scrollTo('pricing', {
+                    smooth: true,
+                    duration: 200,
+                });
+            }, 100)
+        }}>
+            home page
+        </Link>
+    )
+
+    const isDemo = loggedInUser.demo_expired_at == null
+
+    const premiumNotes = (
+        <ul>
+            <li>
+                You are currently using a premium account since you have previously purchased premium credits.
+            </li>
+            <li>
+                You have access to all of our features as described on our site's {pricingUrl}.
+            </li>
+        </ul>
+    )
+
+    const demoNotes = (
+        <ul>
+            <li>
+                You are currently using a demo account. You get 1 free course registration.
+            </li>
+            <li>
+                Please note that demo accounts come with additional restrictions as described on our site's {pricingUrl}.
+            </li>
+            <li>
+                You can upgrade to a premium account by purchasing additional premium credits.
+            </li>
+            <li>
+                If you purchase premium credits before using your demo credits, your demo credits will be converted to premium credits.
+            </li>
+        </ul>
+    )
+
     return (
         <Container className={"py-4 py-xl-5"} style={{ borderBottom: '1px solid var(--bs-gray-500)' }}>
             <Row className="mb-2">
@@ -15,8 +60,24 @@ function AccessManagement({loggedInUser, setLoggedInUser}) {
                 <Col style={{ minWidth: '250px', paddingBottom: '12px' }}>
                     <h4 className="d-flex d-sm-flex justify-content-center justify-content-sm-center">Current Access Currents</h4>
                     <div className="d-flex align-items-md-center">
-                        <p className="text-bg-light" style={{ "minHeight": '100px', borderWidth: '2px', borderStyle: 'inset', padding: '12px', margin: '12px' }}>You have 1 demo credit</p>
-                        TODO ADD HOVER FOOTNOTES
+                        <p
+                            className="text-bg-light"
+                            style={{
+                                minHeight: '100px',
+                                borderWidth: '3px',
+                                borderStyle: 'inset',
+                                width: '100%',
+                                padding: '12px',
+                                margin: '12px' }}
+                        >
+                            <b>Access Level:</b> {isDemo ? "Demo" : "Premium"}
+                            <br/>
+                            <b>Credits:</b> {loggedInUser.current_credits}
+                            <br/>
+                            <b>Notes:</b>
+                            {isDemo ? demoNotes : premiumNotes}
+
+                        </p>
                     </div>
                 </Col>
                 <Col style={{ minWidth: '350px', paddingLeft: '0px', paddingRight: '0px' }}>

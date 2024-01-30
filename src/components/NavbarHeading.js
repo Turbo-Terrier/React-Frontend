@@ -78,7 +78,11 @@ function NavbarHeading({loggedInUser}) {
                                     {loggedIn && (
                                         <Nav.Item className="d-flex d-md-flex align-items-center align-items-md-center justify-content-xl-center" style={{ paddingLeft: '16px' }}>
                                             <img src={loggedInUser.profile_image_url} className="rounded me-2 my-3" style={{ width: '48px', height: '48px', border: '1px outset white'}} />
-                                            <p className="text-light d-flex d-lg-flex" style={{ width: '100px', transform: 'translateY(5px)' }}>Welcome Muhammad!</p>
+                                            <p className="text-light d-flex d-lg-flex" style={{ maxWidth: '180px', transform: 'translateY(5px)' }}>
+                                                Welcome,
+                                                <br/>
+                                                {loggedInUser.given_name}!
+                                            </p>
                                         </Nav.Item>
                                     )}
                                 </Nav>

@@ -490,7 +490,7 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
                     <Form.Group className="mb-3">
                         <Form.Label className="form-label fw-semibold d-md-flex justify-content-md-center">Semester</Form.Label>
                         <Form.Select value={selectedSemester ? `${selectedSemester.semester_season} ${selectedSemester.semester_year}` : "0"} required onChange={updateSelectedSemester}>
-                            <option value="0" disabled>Select the target semester</option>
+                            <option value="" disabled>Select the target semester</option>
                             {activeSemesters.map((semester) => {
                                 return <option
                                     key={semester.semester_season + " " + semester.semester_year}
