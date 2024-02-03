@@ -59,8 +59,8 @@ function AccessManagement({loggedInUser, setLoggedInUser}) {
             <Row>
                 <Col style={{ minWidth: '250px', paddingBottom: '12px' }}>
                     <h4 className="d-flex d-sm-flex justify-content-center justify-content-sm-center">Current Access Currents</h4>
-                    <div className="d-flex align-items-md-center">
-                        <p
+                    <div className="d-flex">
+                        <div
                             className="text-bg-light"
                             style={{
                                 minHeight: '100px',
@@ -77,10 +77,10 @@ function AccessManagement({loggedInUser, setLoggedInUser}) {
                             <b>Notes:</b>
                             {isDemo ? demoNotes : premiumNotes}
 
-                        </p>
+                        </div>
                     </div>
                 </Col>
-                <Col style={{ minWidth: '350px', paddingLeft: '0px', paddingRight: '0px' }}>
+                <Col style={{ minWidth: '380px' }}>
                     <h4 className="d-flex d-sm-flex d-lg-flex justify-content-center justify-content-sm-center justify-content-lg-center">Purchase Access Credits</h4>
                     <PremiumPricing loggedInUser={loggedInUser}/>
                 </Col>

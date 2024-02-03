@@ -309,7 +309,6 @@ async function updateCourse(courseObject, insert) {
 function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
     let [appSettings, setAppSettings] = settingsHook
     let [messageSaveToast, setMessageSaveToast] = messageSaveToastHook
-
     let [courseSuggestions, setCourseSuggestions] = useState([])
     const [rawCourseValue, setRawCourseValue] = useState('');
     let [activeSemesters, setActiveSemesters] = useState([])
@@ -317,10 +316,17 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
     let [selectedSemester, setSelectedSemester] = useState(null)
     let courseSuggestionsHook = [courseSuggestions, setCourseSuggestions]
     let [selectedCourse, setSelectedCourse] = useState(null)
+    let [validCourseFormat, setValidCourseFormat] = useState(false)
     let rawCourseValueHook = [rawCourseValue, setRawCourseValue]
     let selectedCourseHook = [selectedCourse, setSelectedCourse]
     let selectedSemesterHook = [selectedSemester, setSelectedSemester];
     let courseListHook = [courseList, setCourseList]
+
+    useEffect(() => {
+        const pattern = "[a-zA-Z]{3} [a-zA-Z]{2} [0-9]{3} [a-zA-Z]{1,2}[0-9]{1,2}$"
+        let regex = new RegExp(pattern)
+        setValidCourseFormat(regex.test(rawCourseValue))
+    }, [rawCourseValue])
 
     const deleteHandler = (course) => {
         updateCourse(course, false)
@@ -348,11 +354,18 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
             .catch(error => console.log(error))
     }
 
-    // todo
     function addCourse() {
         let selectedCourseObject = getCourseSuggestions(courseList, selectedCourse, true)
         if (selectedCourseObject.length === 0) {
-            console.log("TODO") //todo warn about unknown course being added
+            if (!validCourseFormat) {
+                setMessageSaveToast({
+                    show: true,
+                    message: <>'{selectedCourse}' is not in a valid course format!<br/>Example format: CAS XX 123 A1</>,
+                    status: ToastStatus.ERROR,
+                    delay: 6000
+                })
+            }
+            console.log("TODO", validCourseFormat) //todo warn about unknown course being added, if they confirm, add course to backend and then add it to the list
             return
         } else {
             selectedCourseObject = selectedCourseObject[0].courses[0]
@@ -405,6 +418,7 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
             semester_year: semesterYear
         })
         setSelectedCourse(null)
+        setRawCourseValue('')
     }
 
     async function fetchActiveSemesters(){
@@ -449,19 +463,18 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
                             <h5>Target Courses</h5>
                         </Col>
                     </Row>
-                    <Row className="g-0 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 text-center text-bg-light m-2"
+                    <Row className="g-0 text-center text-bg-light m-2"
                          style={{borderStyle: 'inset'}}>
-                        {/* TODO: I rather add sections for the semesters */}
                         <Col style={{width: '100%'}} className={"p-1"}>
                             {
                                 Object.entries(coursesBySemester).map(([semester, targetCourses]) =>
-                                    (<>
+                                    (<div key={semester}>
                                         <Row>
                                             <h6>
                                                 [{semester} Semester]
                                             </h6>
                                         </Row>
-                                        <Row>
+                                        <Row className={"row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4"}>
                                             {targetCourses.map((courseInfo) => {
                                                 return <AddedCourse
                                                     key={
@@ -473,7 +486,7 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
                                                     courseInfo={courseInfo} deleteHandler={() => deleteHandler(courseInfo)}/>
                                             })}
                                         </Row>
-                                    </>)
+                                    </div>)
                                 )
                             }
                         </Col>
@@ -489,7 +502,7 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
                 <Col md className="m-2">
                     <Form.Group className="mb-3">
                         <Form.Label className="form-label fw-semibold d-md-flex justify-content-md-center">Semester</Form.Label>
-                        <Form.Select value={selectedSemester ? `${selectedSemester.semester_season} ${selectedSemester.semester_year}` : "0"} required onChange={updateSelectedSemester}>
+                        <Form.Select value={selectedSemester ? `${selectedSemester.semester_season} ${selectedSemester.semester_year}` : ""} required onChange={updateSelectedSemester}>
                             <option value="" disabled>Select the target semester</option>
                             {activeSemesters.map((semester) => {
                                 return <option
@@ -505,7 +518,7 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
                 <Col md className="m-2">
                     <Form.Group className="mb-3">
                         <Form.Label className="form-label fw-semibold d-md-flex justify-content-md-center">Course</Form.Label>
-                        <SearchableInput rawCourseValueHook={rawCourseValueHook} courseSuggestionsHook={courseSuggestionsHook} selectedCourseHook={selectedCourseHook} selectedSemesterHook={selectedSemesterHook} courseListHook={courseListHook}/>
+                        <SearchableInput validCourseFormat={validCourseFormat} rawCourseValueHook={rawCourseValueHook} courseSuggestionsHook={courseSuggestionsHook} selectedCourseHook={selectedCourseHook} selectedSemesterHook={selectedSemesterHook} courseListHook={courseListHook}/>
                     </Form.Group>
                 </Col>
             </Row>

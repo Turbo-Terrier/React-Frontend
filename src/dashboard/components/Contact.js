@@ -63,7 +63,7 @@ function Contact() {
                     <Form className="p-3 p-xl-4" onSubmit={handleSubmit}>
                         <div className="mb-3"></div>
                         <Form.Label className="form-label fw-semibold">What is the reason for your message?</Form.Label>
-                        <Form.Select name="support-type" id="support-type" style={{ padding: '6px 12px', margin: '0px 0px 16px' }} onChange={(e) => setSupportType(e.target.value)}>
+                        <Form.Select name="support-type" id="support-type" defaultValue="" style={{ padding: '6px 12px', margin: '0px 0px 16px' }} onChange={(e) => setSupportType(e.target.value)}>
                             <option value="" disabled></option>
                             <option value="bug">Bug Report</option>
                             <option value="billing">Billing Concern</option>

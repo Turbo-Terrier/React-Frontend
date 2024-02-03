@@ -15,6 +15,7 @@ const ToastStatus = {
 
 const StatusToast = ({messageSaveToastHook}) => {
     let [messageSaveToast, setMessageSaveToast] = messageSaveToastHook
+    messageSaveToast.delay = messageSaveToast.delay || 3000
     return (
         <ToastContainer
             className="p-3"
@@ -26,7 +27,7 @@ const StatusToast = ({messageSaveToastHook}) => {
                 show: false,
                 message: messageSaveToast.message,
                 status: messageSaveToast.status
-            })} show={messageSaveToast.show} delay={3000} autohide={true} animation={true}>
+            })} show={messageSaveToast.show} delay={messageSaveToast.delay} autohide={true} animation={true}>
                 <Toast.Header className={'header-' + messageSaveToast.status.className + ' text-white'} closeButton={true}>
                     <strong className="me-auto">{messageSaveToast.status.title}</strong>
                 </Toast.Header>

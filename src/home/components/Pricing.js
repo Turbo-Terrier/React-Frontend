@@ -140,7 +140,7 @@ function PremiumPricing({loggedInUser}) {
                         <>
                             <Row>
                                 <Col className="d-flex justify-content-center">
-                                    <PurchaseConfirm hook={[openModal, setOpenModal]} quantity={quantity} />
+                                    <PurchaseConfirm hook={[openModal, setOpenModal]} quantity={quantity} totalPrice={totalPrice} />
                                     <Button className="fs-6 fw-bolder d-block w-100 bg-white-300 m-2" role="button" onClick={() => setOpenModal(true)}>Purchase</Button>
                                 </Col>
                             </Row>
@@ -156,6 +156,7 @@ function PurchaseConfirm(props) {
     let [canBuy, setCanBuy] = useState(false)
     let [openedModal, setOpenedModal] = props.hook
     let quantity = props.quantity
+    let totalPrice = props.totalPrice
 
     async function purchase() {
         let endpoint = "http://localhost:8080/api/web/v1/create-checkout-session"
@@ -200,7 +201,9 @@ function PurchaseConfirm(props) {
                 <Modal.Body>
                     <Row>
                         <Col className="d-flex justify-content-center">
-                            Please confirm your purchase of +{quantity} Premium Access credits.
+                            <p>Please confirm your purchase of <b>+{quantity} Premium Access credits</b> for a total of <b>${totalPrice.toFixed(2)} USD</b> to proceed.</p>
+                            <br/>
+                            <br/>
                         </Col>
                     </Row>
                     <Row>
@@ -237,7 +240,7 @@ function PurchaseConfirm(props) {
                         </div>
                         <div className="form-check">
                             <input className="form-check-input" type="checkbox" id="formCheck-3" onClick={updateBuy}/>
-                            <label className="form-check-label" htmlFor="formCheck-2">
+                            <label className="form-check-label" htmlFor="formCheck-3">
                                 I have acknowledged the <a href="/refunds">Refund Policy</a>.
                             </label>
                         </div>

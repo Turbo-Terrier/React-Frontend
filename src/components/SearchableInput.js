@@ -7,13 +7,25 @@ import {BuCourseSection} from "../data/BuCourse";
 import {Col, Row} from "react-bootstrap";
 
 
+const courseSemesterCache = {} // holds the course list for each semester
 
-const SearchableInput = ({rawCourseValueHook, courseSuggestionsHook, selectedCourseHook, selectedSemesterHook, courseListHook}) => {
+const SearchableInput = ({validCourseFormat, rawCourseValueHook, courseSuggestionsHook, selectedCourseHook, selectedSemesterHook, courseListHook}) => {
     const [rawCourseValue, setRawCourseValue] = rawCourseValueHook;
     const [courseSuggestions, setCourseSuggestions] = courseSuggestionsHook;
     const [courseList, setCourseList] = courseListHook;
     const [selectedCourse, setSelectedCourse] = selectedCourseHook;
     const [selectedSemester, setSelectedSemester] = selectedSemesterHook;
+
+    let boxColorClass = "";
+    if (rawCourseValue === '') {
+        boxColorClass = ''
+    } else if (getCourseSuggestions(courseList, selectedCourse, true).length !== 0) {
+        boxColorClass = "input-valid"
+    } else if (validCourseFormat) {
+        boxColorClass = "input-unknown"
+    } else {
+        boxColorClass = "input-invalid"
+    }
 
     useEffect(() => {
         if (selectedSemester === null) {
@@ -21,19 +33,27 @@ const SearchableInput = ({rawCourseValueHook, courseSuggestionsHook, selectedCou
         }
         setCourseList([])
         setCourseSuggestions([])
-        getAllCourses(selectedSemester).then(resp => {
-            if (resp.ok) {
-                return resp.json()
-            } else {
-                return null;
-            }
-        }).then(data => {
-            if (data === null) {
-                setCourseList(null)
-            } else {
-                setCourseList(BuCourseSection.specialJson(data))
-            }
-        });
+
+        let semesterCacheKey = selectedSemester.semester_season + selectedSemester.semester_year
+        if (courseSemesterCache[semesterCacheKey] != null) {
+            setCourseList(courseSemesterCache[semesterCacheKey])
+        } else {
+            getAllCourses(selectedSemester).then(resp => {
+                if (resp.ok) {
+                    return resp.json()
+                } else {
+                    return null;
+                }
+            }).then(data => {
+                if (data === null) {
+                    setCourseList(null)
+                } else {
+                    let result = BuCourseSection.specialJson(data)
+                    courseSemesterCache[semesterCacheKey] = result
+                    setCourseList(result)
+                }
+            });
+        }
     }, [selectedSemester]);
 
     const onSuggestionsFetchRequested = ({ value, reason }) => {
@@ -90,7 +110,7 @@ const SearchableInput = ({rawCourseValueHook, courseSuggestionsHook, selectedCou
                 <Form.Control
                     {...inputProps}
                     type="text"
-                    className="autosuggest-input"
+                    className={"autosuggest-input " + boxColorClass}
                     value={selectedCourse || ""}
                     disabled={selectedSemester === null}
                 />
@@ -146,6 +166,11 @@ function getCourseSuggestions(courseList, inputValue, exactMatch) {
                     }
                 }
             )}]
+        if (filteredSuggestions[0].courses.length === 0) {
+            filteredSuggestions = []
+        }
+    } else if (exactMatch) {
+        filteredSuggestions = []
     }
 
     return filteredSuggestions.slice(0, 30)
