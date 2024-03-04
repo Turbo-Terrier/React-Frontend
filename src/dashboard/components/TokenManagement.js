@@ -40,22 +40,15 @@ function TokenManagement({loggedInUser, setLoggedInUser}) {
                 } else {
                     return null;
                 }
-            }).then(data => {
-            if (data === null) {
-
-            } else {
-                const expirationDate = new Date();
-                expirationDate.setDate(expirationDate.getDate() + 30);
-                Cookies.set("jwt-token", data.jwt_cookie, {expires: expirationDate, path: '/'})
-                setLoggedInUser(data.user)
+            }).then(user => {
+                setLoggedInUser(user)
                 setShowTooltip2(true)
                 setTimeout(() => {
                     setShowTooltip2(false)
                 }, 1200)
-            }
-        }).catch(err => {
-            console.log(err)
-        })
+            }).catch(err => {
+                console.log(err)
+            })
     }
 
     return (

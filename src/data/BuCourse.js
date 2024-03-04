@@ -1,5 +1,39 @@
 import JsonSerializable from "./JsonSerializable";
 
+class Semester extends JsonSerializable {
+    constructor(semester_season, year) {
+        super();
+        this.semester_season = semester_season;
+        this.year = year;
+    }
+
+    compare(other) {
+        if (this.year < other.year) {
+            return -1;
+        } else if (this.year > other.year) {
+            return 1;
+        } else {
+            return this.getSeasonOrdinal() - other.getSeasonOrdinal();
+        }
+    }
+
+    getSeasonOrdinal() {
+        switch (this.semester_season.toLowerCase().replace(" ", "")) {
+            case "spring":
+                return 0;
+            case "summer1":
+                return 1;
+            case "summer2":
+                return 2;
+            case "fall":
+                return 3;
+            default:
+                return -1;
+        }
+    }
+
+}
+
 class BuCourse extends JsonSerializable {
 
     constructor(course_id, semester, college, department, course_code, title, credits) {
@@ -59,4 +93,4 @@ class BuCourseSection extends JsonSerializable {
     }
 }
 
-export { BuCourse, CourseSection, BuCourseSection }
+export { BuCourse, CourseSection, BuCourseSection, Semester }

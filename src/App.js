@@ -50,7 +50,7 @@ function App() {
                 let json_resp = await result.json()
                 const expirationDate = new Date();
                 expirationDate.setDate(expirationDate.getDate() + 30);
-                Cookies.set("jwt-token", json_resp['jwt_cookie'], { expires: expirationDate, path: '/' })
+                Cookies.set("jwt-token", json_resp['jwt_cookie'], { expires: expirationDate })
                 // todo reroute to DashBoard
                 window.location.href = "/"
             } else {

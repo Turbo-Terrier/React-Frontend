@@ -12,7 +12,8 @@ import ClarificationPopover from "../../components/ClarificationPopover";
 import {StatusToast, ToastStatus} from "../../components/StatusToast";
 import Autosuggest from "react-autosuggest";
 import {SearchableInput, getCourseSuggestions} from "../../components/SearchableInput";
-import {BuCourse, BuCourseSection} from "../../data/BuCourse";
+import {BuCourse, BuCourseSection, Semester} from "../../data/BuCourse";
+import ConfirmationPopover from "../../components/ConfirmationPopover";
 
 
 
@@ -316,6 +317,7 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
     let [selectedSemester, setSelectedSemester] = useState(null)
     let courseSuggestionsHook = [courseSuggestions, setCourseSuggestions]
     let [selectedCourse, setSelectedCourse] = useState(null)
+    let [coursesBySemester, setCoursesBySemester] = useState(new Map())
     let [validCourseFormat, setValidCourseFormat] = useState(false)
     let rawCourseValueHook = [rawCourseValue, setRawCourseValue]
     let selectedCourseHook = [selectedCourse, setSelectedCourse]
@@ -354,7 +356,7 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
             .catch(error => console.log(error))
     }
 
-    function addCourse() {
+    function addCourse(exists) {
         let selectedCourseObject = getCourseSuggestions(courseList, selectedCourse, true)
         if (selectedCourseObject.length === 0) {
             if (!validCourseFormat) {
@@ -391,7 +393,7 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
                             status: ToastStatus.ERROR
                         })
                     }
-                    setSelectedCourse(null)
+                    setSelectedCourse("")
                     setRawCourseValue("")
                     setSelectedSemester(null)
 
@@ -443,16 +445,27 @@ function CourseSelectionForum({settingsHook, messageSaveToastHook}) {
             .catch(error => console.log(error))
     }, [])
 
-    // convert appSettings.target_courses into a dictionary of semesters to courses
-    let coursesBySemester = {}
-    appSettings.target_courses.forEach(courseInfo => {
-        let key = courseInfo.course.semester.semester_season + " " + courseInfo.course.semester.semester_year
-        if (key in coursesBySemester) {
-            coursesBySemester[key].push(courseInfo)
-        } else {
-            coursesBySemester[key] = [courseInfo]
-        }
-    })
+    useEffect(() => {
+        let updatedCoursesBySemester = new Map()
+        // sort the courses by semester
+        appSettings.target_courses.sort((a, b) => {
+            let semesterA = a.course.semester
+            let semesterB = b.course.semester
+            Object.setPrototypeOf(semesterA, Semester.prototype)
+            Object.setPrototypeOf(semesterB, Semester.prototype)
+            return semesterA.compare(semesterB)
+        })
+        // convert appSettings.target_courses into a dictionary of semesters to courses
+        appSettings.target_courses.forEach(courseInfo => {
+            let key = courseInfo.course.semester.semester_season + " " + courseInfo.course.semester.semester_year
+            if (key in updatedCoursesBySemester) {
+                updatedCoursesBySemester[key].push(courseInfo)
+            } else {
+                updatedCoursesBySemester[key] = [courseInfo]
+            }
+        })
+        setCoursesBySemester(updatedCoursesBySemester)
+    }, [appSettings.target_courses])
 
     return (
         <Form>

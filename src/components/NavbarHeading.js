@@ -16,7 +16,7 @@ function NavbarHeading({loggedInUser}) {
     const [openedModal, setOpenedModal] = useState(false);
 
     function logout() {
-        Cookies.set("jwt-token", "", { expires: 0, path: '/' })
+        Cookies.set("jwt-token", "", { expires: 0 })
         window.location.href = "/"
     }
 

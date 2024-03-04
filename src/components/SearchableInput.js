@@ -82,6 +82,7 @@ const SearchableInput = ({validCourseFormat, rawCourseValueHook, courseSuggestio
             <h6>{suggestion.course.college + ' ' + suggestion.course.department + ' ' + suggestion.course.course_code + ' ' + suggestion.section.section}</h6>
             <Row style={{fontSize: '12px'}}>
                 <Col className={""}>{suggestion.section.instructor}</Col>
+                <Col className={""}>{suggestion.section.section_type}</Col>
                 <Col>{suggestion.section.location}</Col>
                 <Col>{suggestion.section.schedule}</Col>
             </Row>
